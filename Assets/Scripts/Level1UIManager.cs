@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class Level1UIManager : MonoBehaviour
     [SerializeField] GameObject resumeMenu, gameOverMenu;
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, effect;
+    [SerializeField] Info info;
+    [SerializeField] CanvasGroup bg;
     void Start()
     {
         if (PlayerPrefs.HasKey("Music"))
@@ -34,10 +37,6 @@ public class Level1UIManager : MonoBehaviour
 
         musicSlider.onValueChanged.AddListener(delegate { SoundChanged(musicSlider, music, "Music"); });
         effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
-    }
-    void Update()
-    {
-        
     }
     void ResumeMenuOpen()
     {
@@ -69,6 +68,14 @@ public class Level1UIManager : MonoBehaviour
     {
         effect.Play();
         Application.Quit();
+    }
+    public void NextLevel()
+    {
+        bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            info.InfoShowing();
+            bg.DOFade(0, 1).SetEase(Ease.Linear);
+        });
     }
     public void GameoverOpen()
     {
