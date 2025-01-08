@@ -25,12 +25,14 @@ public class MenuUIManager : MonoBehaviour
         music.volume = musicSlider.value;
         effect.volume = effectSlider.value;
         music.Play();
+
         currentGroup = main;
         backBtn.onClick.AddListener(Back);
         playBtn.onClick.AddListener(PlayGame);
         settingsBtn.onClick.AddListener(delegate { GroupChange(settings); });
         creditsBtn.onClick.AddListener(delegate { GroupChange(credits); });
         writersBtn.onClick.AddListener(delegate { GroupChange(writers); });
+
         musicSlider.onValueChanged.AddListener(delegate { SoundChanged(musicSlider, music, "Music"); });
         effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
     }
