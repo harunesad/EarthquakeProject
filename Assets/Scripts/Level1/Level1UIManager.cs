@@ -8,15 +8,16 @@ using UnityEngine.UI;
 
 public class Level1UIManager : MonoBehaviour
 {
-    [SerializeField] Button resumeMenuBtn, resumeBtn, resumeCloseBtn, resumeRestartBtn, gameoverRestartBtn, resumeExitBtn, gameoverExitBtn;
+    [SerializeField] Button resumeMenuBtn, resumeBtn, resumeCloseBtn, resumeRestartBtn, gameoverRestartBtn, resumeExitBtn, gameoverExitBtn,
+        timeFinishBtn;
     [SerializeField] GameObject resumeMenu, gameOverMenu;
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, effect;
     [SerializeField] Info info;
     [SerializeField] CanvasGroup bg;
-    [SerializeField] TextMeshProUGUI timeText;
+    public TextMeshProUGUI timeText;
     [SerializeField] Level1Manager level1Manager;
-    float time = 0;
+    float time = 60;
     bool timer = false;
     void Start()
     {
@@ -39,9 +40,12 @@ public class Level1UIManager : MonoBehaviour
         resumeCloseBtn.onClick.AddListener(ResumeMenuClose);
         gameoverRestartBtn.onClick.AddListener(RestartGame);
         gameoverExitBtn.onClick.AddListener(ExitGame);
+        timeFinishBtn.onClick.AddListener(TimeFinish);
 
         musicSlider.onValueChanged.AddListener(delegate { SoundChanged(musicSlider, music, "Music"); });
         effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
+
+        TimerStart();
     }
     private void Update()
     {
@@ -56,8 +60,9 @@ public class Level1UIManager : MonoBehaviour
             //timeText.text = Mathf.FloorToInt(time % 60).ToString();
             timeText.text = ((int)time).ToString();
             timer = false;
-            timeText.gameObject.SetActive(false);
-            NextLevel();
+            //timeText.gameObject.SetActive(false);
+            StartCoroutine(level1Manager.Dropping());
+            //NextLevel();
         }
     }
     void ResumeMenuOpen()
@@ -91,12 +96,22 @@ public class Level1UIManager : MonoBehaviour
         effect.Play();
         Application.Quit();
     }
+    void TimeFinish()
+    {
+        if (timer)
+        {
+            time = 0;
+            timeText.text = ((int)time).ToString();
+            timer = false;
+            //timeText.gameObject.SetActive(false);
+            StartCoroutine(level1Manager.Dropping());
+        }
+    }
     public void TimerStart()
     {
         if (!timer)
         {
-            time = 5;
-            Debug.Log("a");
+            //time = 60;
             timeText.text = ((int)time).ToString();
             timeText.gameObject.SetActive(true);
             timer = true;
