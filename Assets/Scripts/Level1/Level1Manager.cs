@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Level1Manager : MonoBehaviour
 {
     [SerializeField] Level1UIManager level1UIManager;
-    [SerializeField] LayerMask hideLayer, bagLayer;
+    [SerializeField] LayerMask hideLayer, bagLayer, collectLayer, notCollectLayer;
     [SerializeField] List<GameObject> dropObj;
-    [SerializeField] NavMeshAgent player;
     [SerializeField] List<Vector3> pos;
+    [SerializeField] int collectCount;
+    public NavMeshAgent player;
     RaycastHit hit;
     float time = 10;
     int posId = 0;
@@ -42,19 +44,42 @@ public class Level1Manager : MonoBehaviour
             time -= Time.deltaTime;
             level1UIManager.timeText.text = ((int)time).ToString();
         }
-        if (time < 0 && bagCollect && nextLevel)
+        if (time < 0 && bagCollect && !nextLevel)
         {
+            dropTimer = false;
+            level1UIManager.timeText.gameObject.SetActive(false);
             nextLevel = true;
             level1UIManager.NextLevel();
         }
-        else if (time < 0 && !bagCollect && nextLevel)
+        else if (time < 0 && !bagCollect && !nextLevel)
         {
             level1UIManager.GameoverOpen();
+        }
+        if (Physics.Raycast(ray, out hit, 100, collectLayer) && Input.GetMouseButtonDown(0))
+        {
+            hit.transform.gameObject.SetActive(false);
+            level1UIManager.info.InfoChange(hit.transform.name + " doðru");
+            collectCount--;
+        }
+        else if (Physics.Raycast(ray, out hit, 100, notCollectLayer) && Input.GetMouseButtonDown(0))
+        {
+            level1UIManager.info.InfoChange(hit.transform.name + " yanlýþ");
+        }
+        if (collectCount == 0)
+        {
+            StartCoroutine(SceneLoad());
         }
         //if (move)
         //{
         //    StartCoroutine(Dropping());
         //}
+    }
+    IEnumerator SceneLoad()
+    {
+        yield return new WaitForSeconds(1);
+        level1UIManager.info.InfoChange("Tebrikler");
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     public IEnumerator Dropping() 
     {
@@ -71,10 +96,10 @@ public class Level1Manager : MonoBehaviour
             dropTimer = true;
         }
     }
-    public void NextPosition()
-    {
-        player.transform.position = pos[posId++];
-    }
+    //public void NextPosition()
+    //{
+    //    player.transform.position = pos[posId++];
+    //}
     //public void RunFinished()
     //{
     //    Debug.Log("Hide is playing");

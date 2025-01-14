@@ -13,10 +13,12 @@ public class Level1UIManager : MonoBehaviour
     [SerializeField] GameObject resumeMenu, gameOverMenu;
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, effect;
-    [SerializeField] Info info;
     [SerializeField] CanvasGroup bg;
-    public TextMeshProUGUI timeText;
     [SerializeField] Level1Manager level1Manager;
+    [SerializeField] Vector3 camRot;
+    [SerializeField] GameObject environment1, environment2;
+    public Info info;
+    public TextMeshProUGUI timeText;
     float time = 60;
     bool timer = false;
     void Start()
@@ -61,7 +63,14 @@ public class Level1UIManager : MonoBehaviour
             timeText.text = ((int)time).ToString();
             timer = false;
             //timeText.gameObject.SetActive(false);
-            StartCoroutine(level1Manager.Dropping());
+            if (info.infoId == 1)
+            {
+                StartCoroutine(level1Manager.Dropping());
+            }
+            else if (info.infoId == 2) 
+            {
+                GameoverOpen();
+            }
             //NextLevel();
         }
     }
@@ -111,7 +120,7 @@ public class Level1UIManager : MonoBehaviour
     {
         if (!timer)
         {
-            //time = 60;
+            time = 60;
             timeText.text = ((int)time).ToString();
             timeText.gameObject.SetActive(true);
             timer = true;
@@ -121,9 +130,20 @@ public class Level1UIManager : MonoBehaviour
     {
         bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
-            level1Manager.NextPosition();
+            timeFinishBtn.gameObject.SetActive(false);
+            level1Manager.player.gameObject.SetActive(false);
+            Vector3 camPos = Camera.main.transform.position;
+            Camera.main.transform.position = new Vector3(camPos.x, 7, camPos.z);
+            Camera.main.transform.localEulerAngles = camRot;
+            environment1.SetActive(false);
+            environment2.SetActive(true);
+            //level1Manager.NextPosition();
             info.InfoShowing();
             bg.DOFade(0, 1).SetEase(Ease.Linear);
+            time = 60;
+            timeText.text = ((int)time).ToString();
+            timeText.gameObject.SetActive(true);
+            timer = true;
         });
     }
     public void GameoverOpen()
