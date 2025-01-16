@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.SceneManagement;
 
-public class Level1Manager : MonoBehaviour
+public class Level2Manager : MonoBehaviour
 {
-    [SerializeField] Level1UIManager level1UIManager;
-    [SerializeField] LayerMask hideLayer, bagLayer, collectLayer, notCollectLayer;
+    [SerializeField] Level2UIManager level2UIManager;
+    [SerializeField] LayerMask hideLayer, trapLayer;
     [SerializeField] List<GameObject> dropObj;
-    [SerializeField] int collectCount;
+    [SerializeField] List<Vector3> pos;
     public NavMeshAgent player;
     RaycastHit hit;
     float time = 10;
-    bool move = false, dropTimer = false, bagCollect = false, nextLevel = false;
+    int posId;
+    bool move = false, dropTimer = false, nextLevel = false;
     void Start()
     {
         
@@ -29,57 +29,32 @@ public class Level1Manager : MonoBehaviour
                 player.SetDestination(hit.transform.position);
                 //move = true;
             }
-            else if (Physics.Raycast(ray, out hit, 100, bagLayer))
+            else if (Physics.Raycast(ray, out hit, 100, trapLayer))
             {
                 Debug.Log("Animation is palyþng");
                 player.SetDestination(hit.transform.position);
                 //move = true;
-                bagCollect = true;
+                level2UIManager.info.InfoChange("Alice, burasý güvenli deðil! Sýranýn altýna geç ve baþýný koru!");
             }
         }
         if (dropTimer)
         {
             time -= Time.deltaTime;
-            level1UIManager.timeText.text = ((int)time).ToString();
+            level2UIManager.timeText.text = ((int)time).ToString();
         }
-        if (time < 0 && bagCollect && !nextLevel)
+        if (time < 0 && !nextLevel)
         {
             dropTimer = false;
-            level1UIManager.timeText.gameObject.SetActive(false);
+            level2UIManager.timeText.gameObject.SetActive(false);
             nextLevel = true;
-            level1UIManager.NextLevel();
+            level2UIManager.NextLevel();
         }
-        else if (time < 0 && !bagCollect && !nextLevel)
+        else if (time < 0 && !nextLevel)
         {
-            level1UIManager.GameoverOpen();
+            level2UIManager.GameoverOpen();
         }
-        if (Physics.Raycast(ray, out hit, 100, collectLayer) && Input.GetMouseButtonDown(0))
-        {
-            hit.transform.gameObject.SetActive(false);
-            level1UIManager.info.InfoChange(hit.transform.name + " doðru");
-            collectCount--;
-        }
-        else if (Physics.Raycast(ray, out hit, 100, notCollectLayer) && Input.GetMouseButtonDown(0))
-        {
-            level1UIManager.info.InfoChange(hit.transform.name + " yanlýþ");
-        }
-        if (collectCount == 0)
-        {
-            StartCoroutine(SceneLoad());
-        }
-        //if (move)
-        //{
-        //    StartCoroutine(Dropping());
-        //}
     }
-    IEnumerator SceneLoad()
-    {
-        yield return new WaitForSeconds(1);
-        level1UIManager.info.InfoChange("Tebrikler");
-        yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-    public IEnumerator Dropping() 
+    public IEnumerator Dropping()
     {
         yield return new WaitForSeconds(1);
         if (!player.hasPath)
@@ -93,6 +68,10 @@ public class Level1Manager : MonoBehaviour
             move = false;
             dropTimer = true;
         }
+    }
+    public void NextPosition()
+    {
+        player.transform.position = pos[posId++];
     }
     //public void RunFinished()
     //{

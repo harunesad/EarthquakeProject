@@ -5,6 +5,8 @@ using UnityEngine;
 public class Crash : MonoBehaviour
 {
     [SerializeField] Level1UIManager level1UIManager;
+    [SerializeField] Level2UIManager level2UIManager;
+
     void Start()
     {
         
@@ -17,7 +19,14 @@ public class Crash : MonoBehaviour
     {
         if (collision.gameObject.layer == 6)
         {
-            level1UIManager.GameoverOpen();
+            if (level1UIManager)
+            {
+                level1UIManager.GameoverOpen();
+            }
+            if (level2UIManager)
+            {
+                level2UIManager.GameoverOpen();
+            }
         }
     }
 }
