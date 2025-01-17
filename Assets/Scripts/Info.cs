@@ -6,14 +6,22 @@ using UnityEngine.UI;
 
 public class Info : MonoBehaviour
 {
-    [SerializeField] GameObject info;
+    [SerializeField] GameObject info, objectInfo;
     [SerializeField] List<string> infos;
     [SerializeField] Sprite injuredBird;
+    [SerializeField] Level1Manager level1Manager;
     public int infoId;
-    TextMeshProUGUI infoText;
+    TextMeshProUGUI infoText, objectInfoText;
+    Button collectBtn;
     void Start()
     {
         infoText = info.GetComponentInChildren<TextMeshProUGUI>();
+        if (objectInfo)
+        {
+            objectInfoText = objectInfo.GetComponentInChildren<TextMeshProUGUI>();
+            collectBtn = objectInfo.GetComponentInChildren<Button>();
+            collectBtn.onClick.AddListener(Collect);
+        }
         InfoShowing();
     }
     public void InfoShowing()
@@ -30,5 +38,15 @@ public class Info : MonoBehaviour
     public void InfoChange(string message)
     {
         infoText.text = message;
+    }
+    public void ObjectInfoChange(string message)
+    {
+        objectInfo.SetActive(true);
+        objectInfoText.text = message;
+    }
+    void Collect()
+    {
+        level1Manager.CollectableObj();
+        objectInfo.SetActive(false);
     }
 }

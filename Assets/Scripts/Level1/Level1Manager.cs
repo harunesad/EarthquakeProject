@@ -9,11 +9,14 @@ public class Level1Manager : MonoBehaviour
     [SerializeField] Level1UIManager level1UIManager;
     [SerializeField] LayerMask hideLayer, bagLayer, collectLayer, notCollectLayer;
     [SerializeField] List<GameObject> dropObj;
+    [SerializeField] List<Vector3> pos;
     [SerializeField] int collectCount;
     public NavMeshAgent player;
     RaycastHit hit;
+    Transform collectObj;
     float time = 10;
-    bool move = false, dropTimer = false, bagCollect = false, nextLevel = false;
+    int posId;
+    bool move = false, dropTimer = false, bagCollect = false, nextLevel = false, trueObj = false;
     void Start()
     {
         
@@ -36,6 +39,30 @@ public class Level1Manager : MonoBehaviour
                 //move = true;
                 bagCollect = true;
             }
+            else if (Physics.Raycast(ray, out hit, 100, collectLayer))
+            {
+                player.isStopped = false;
+                Debug.Log("Animation is palyþng");
+                player.SetDestination(hit.transform.position);
+                //move = true;
+                level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
+                collectObj = hit.transform;
+                trueObj = true;
+                //hit.transform.gameObject.SetActive(false);
+                //level1UIManager.info.InfoChange(hit.transform.name + " doðru");
+                //collectCount--;
+            }
+            else if (Physics.Raycast(ray, out hit, 100, notCollectLayer))
+            {
+                player.isStopped = false;
+                Debug.Log("Animation is palyþng");
+                player.SetDestination(hit.transform.position);
+                //move = true;
+                level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
+                collectObj = hit.transform;
+                trueObj = false;
+                //level1UIManager.info.InfoChange(hit.transform.name + " yanlýþ");
+            }
         }
         if (dropTimer)
         {
@@ -52,16 +79,6 @@ public class Level1Manager : MonoBehaviour
         else if (time < 0 && !bagCollect && !nextLevel)
         {
             level1UIManager.GameoverOpen();
-        }
-        if (Physics.Raycast(ray, out hit, 100, collectLayer) && Input.GetMouseButtonDown(0))
-        {
-            hit.transform.gameObject.SetActive(false);
-            level1UIManager.info.InfoChange(hit.transform.name + " doðru");
-            collectCount--;
-        }
-        else if (Physics.Raycast(ray, out hit, 100, notCollectLayer) && Input.GetMouseButtonDown(0))
-        {
-            level1UIManager.info.InfoChange(hit.transform.name + " yanlýþ");
         }
         if (collectCount == 0)
         {
@@ -92,6 +109,23 @@ public class Level1Manager : MonoBehaviour
             }
             move = false;
             dropTimer = true;
+        }
+    }
+    public void NextPosition()
+    {
+        player.transform.position = pos[posId++];
+    }
+    public void CollectableObj()
+    {
+        if (trueObj)
+        {
+            collectObj.gameObject.SetActive(false);
+            level1UIManager.info.InfoChange(collectObj.name + " doðru");
+            collectCount--;
+        }
+        else
+        {
+            level1UIManager.info.InfoChange(collectObj.name + " yanlýþ");
         }
     }
     //public void RunFinished()
