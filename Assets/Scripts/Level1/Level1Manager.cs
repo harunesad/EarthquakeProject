@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using EZCameraShake;
 
 public class Level1Manager : MonoBehaviour
 {
@@ -48,9 +49,6 @@ public class Level1Manager : MonoBehaviour
                 level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
                 collectObj = hit.transform;
                 trueObj = true;
-                //hit.transform.gameObject.SetActive(false);
-                //level1UIManager.info.InfoChange(hit.transform.name + " doðru");
-                //collectCount--;
             }
             else if (Physics.Raycast(ray, out hit, 100, notCollectLayer))
             {
@@ -61,7 +59,6 @@ public class Level1Manager : MonoBehaviour
                 level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
                 collectObj = hit.transform;
                 trueObj = false;
-                //level1UIManager.info.InfoChange(hit.transform.name + " yanlýþ");
             }
         }
         if (dropTimer)
@@ -71,6 +68,9 @@ public class Level1Manager : MonoBehaviour
         }
         if (time < 0 && bagCollect && !nextLevel)
         {
+            Camera.main.GetComponent<CameraShaker>().enabled = false;
+            move = false;
+            player.isStopped = true;
             dropTimer = false;
             level1UIManager.timeText.gameObject.SetActive(false);
             nextLevel = true;
@@ -99,17 +99,24 @@ public class Level1Manager : MonoBehaviour
     public IEnumerator Dropping() 
     {
         yield return new WaitForSeconds(1);
-        if (!player.hasPath)
+        //if (!player.hasPath)
+        //{
+        //    player.isStopped = true;
+        //    for (int i = 0; i < dropObj.Count; i++)
+        //    {
+        //        dropObj[i].GetComponent<Rigidbody>().useGravity = true;
+        //    }
+        //    move = false;
+        //    dropTimer = true;
+        //}
+        for (int i = 0; i < dropObj.Count; i++)
         {
-            player.isStopped = true;
-            //level1UIManager.TimerStart();
-            for (int i = 0; i < dropObj.Count; i++)
-            {
-                dropObj[i].GetComponent<Rigidbody>().useGravity = true;
-            }
-            move = false;
-            dropTimer = true;
+            dropObj[i].GetComponent<Rigidbody>().useGravity = true;
         }
+        dropTimer = true;
+
+        Camera.main.GetComponent<CameraShaker>().enabled = true;
+        CameraShaker.Instance.StartShake(2, 4, .1f);
     }
     public void NextPosition()
     {

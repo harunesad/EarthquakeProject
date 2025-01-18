@@ -1,3 +1,4 @@
+using EZCameraShake;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,9 @@ public class Level2Manager : MonoBehaviour
         }
         if (time < 0 && !nextLevel)
         {
+            Camera.main.GetComponent<CameraShaker>().enabled = false;
+            move = false;
+            player.isStopped = true;
             dropTimer = false;
             level2UIManager.timeText.gameObject.SetActive(false);
             nextLevel = true;
@@ -57,17 +61,24 @@ public class Level2Manager : MonoBehaviour
     public IEnumerator Dropping()
     {
         yield return new WaitForSeconds(1);
-        if (!player.hasPath)
+        //if (!player.hasPath)
+        //{
+        //    player.isStopped = true;
+        //    for (int i = 0; i < dropObj.Count; i++)
+        //    {
+        //        dropObj[i].GetComponent<Rigidbody>().useGravity = true;
+        //    }
+        //    move = false;
+        //    dropTimer = true;
+        //}
+        for (int i = 0; i < dropObj.Count; i++)
         {
-            player.isStopped = true;
-            //level1UIManager.TimerStart();
-            for (int i = 0; i < dropObj.Count; i++)
-            {
-                dropObj[i].GetComponent<Rigidbody>().useGravity = true;
-            }
-            move = false;
-            dropTimer = true;
+            dropObj[i].GetComponent<Rigidbody>().useGravity = true;
         }
+        dropTimer = true;
+
+        Camera.main.GetComponent<CameraShaker>().enabled = true;
+        CameraShaker.Instance.StartShake(2, 4, .1f);
     }
     public void NextPosition()
     {
