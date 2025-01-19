@@ -25,7 +25,7 @@ public class Level1Manager : MonoBehaviour
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Input.GetMouseButtonDown(0) && !move)
+        if (Input.GetMouseButtonDown(0) && !move && !dropTimer)
         {
             if (Physics.Raycast(ray, out hit, 100, hideLayer))
             {
@@ -40,7 +40,7 @@ public class Level1Manager : MonoBehaviour
                 //move = true;
                 bagCollect = true;
             }
-            else if (Physics.Raycast(ray, out hit, 100, collectLayer))
+            else if (Physics.Raycast(ray, out hit, 100, collectLayer) && collectCount != 0)
             {
                 player.isStopped = false;
                 Debug.Log("Animation is palyþng");
@@ -50,7 +50,7 @@ public class Level1Manager : MonoBehaviour
                 collectObj = hit.transform;
                 trueObj = true;
             }
-            else if (Physics.Raycast(ray, out hit, 100, notCollectLayer))
+            else if (Physics.Raycast(ray, out hit, 100, notCollectLayer) && collectCount != 0)
             {
                 player.isStopped = false;
                 Debug.Log("Animation is palyþng");
@@ -84,10 +84,6 @@ public class Level1Manager : MonoBehaviour
         {
             StartCoroutine(SceneLoad());
         }
-        //if (move)
-        //{
-        //    StartCoroutine(Dropping());
-        //}
     }
     IEnumerator SceneLoad()
     {

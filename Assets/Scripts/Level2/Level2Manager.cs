@@ -7,9 +7,10 @@ using UnityEngine.AI;
 public class Level2Manager : MonoBehaviour
 {
     [SerializeField] Level2UIManager level2UIManager;
-    [SerializeField] LayerMask hideLayer, trapLayer;
+    [SerializeField] LayerMask hideLayer, trapLayer, groundLayer;
     [SerializeField] List<GameObject> dropObj;
     [SerializeField] List<Vector3> pos;
+    [SerializeField] GameObject ground;
     public NavMeshAgent player;
     RaycastHit hit;
     float time = 10;
@@ -22,13 +23,14 @@ public class Level2Manager : MonoBehaviour
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Input.GetMouseButtonDown(0) && !move)
+        if (Input.GetMouseButtonDown(0) && !move && !dropTimer)
         {
             if (Physics.Raycast(ray, out hit, 100, hideLayer))
             {
                 Debug.Log("Animation is palyþng");
                 player.SetDestination(hit.transform.position);
                 //move = true;
+                level2UIManager.info.InfoChange("Alice, burasý güvenli!");
             }
             else if (Physics.Raycast(ray, out hit, 100, trapLayer))
             {
@@ -36,6 +38,13 @@ public class Level2Manager : MonoBehaviour
                 player.SetDestination(hit.transform.position);
                 //move = true;
                 level2UIManager.info.InfoChange("Alice, burasý güvenli deðil! Sýranýn altýna geç ve baþýný koru!");
+            }
+            else if (Physics.Raycast(ray, out hit, 100, groundLayer))
+            {
+                player.isStopped = false;
+                Debug.Log("Animation is palyþng");
+                player.SetDestination(hit.point);
+                //move = true;
             }
         }
         if (dropTimer)
@@ -46,6 +55,7 @@ public class Level2Manager : MonoBehaviour
         if (time < 0 && !nextLevel)
         {
             Camera.main.GetComponent<CameraShaker>().enabled = false;
+            ground.layer = 11;
             move = false;
             player.isStopped = true;
             dropTimer = false;

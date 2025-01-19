@@ -14,9 +14,9 @@ public class Level2UIManager : MonoBehaviour
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, effect;
     [SerializeField] CanvasGroup bg;
-    [SerializeField] Level2Manager level2Manager;
     [SerializeField] Vector3 camRot;
     [SerializeField] GameObject environment1, environment2;
+    public Level2Manager level2Manager;
     public Info info;
     public TextMeshProUGUI timeText;
     float time = 60;
@@ -130,16 +130,26 @@ public class Level2UIManager : MonoBehaviour
             timeFinishBtn.gameObject.SetActive(false);
             level2Manager.NextPosition();
             Vector3 camPos = Camera.main.transform.position;
-            Camera.main.transform.position = new Vector3(camPos.x, 7, camPos.z);
+            //Camera.main.transform.position = new Vector3(camPos.x, 7, camPos.z);
             Camera.main.transform.localEulerAngles = camRot;
             environment1.SetActive(false);
             environment2.SetActive(true);
             info.InfoShowing();
-            bg.DOFade(0, 1).SetEase(Ease.Linear);
             time = 60;
             timeText.text = ((int)time).ToString();
             timeText.gameObject.SetActive(true);
             timer = true;
+            bg.DOFade(0, 1).SetEase(Ease.Linear);
+        });
+    }
+    public void CompetitionOpen()
+    {
+        bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            level2Manager.player.gameObject.SetActive(false);
+            environment2.SetActive(false);
+            info.QuestionShowing();
+            bg.DOFade(0, 1).SetEase(Ease.Linear);
         });
     }
     public void GameoverOpen()

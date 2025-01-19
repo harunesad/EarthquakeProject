@@ -131,12 +131,12 @@ public class Level1UIManager : MonoBehaviour
         bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
             timeFinishBtn.gameObject.SetActive(false);
+            level1Manager.NextPosition();
             Vector3 camPos = Camera.main.transform.position;
             //Camera.main.transform.position = new Vector3(camPos.x, 7, camPos.z);
             Camera.main.transform.localEulerAngles = camRot;
             environment1.SetActive(false);
             environment2.SetActive(true);
-            level1Manager.NextPosition();
             info.InfoShowing();
             bg.DOFade(0, 1).SetEase(Ease.Linear);
             time = 60;
