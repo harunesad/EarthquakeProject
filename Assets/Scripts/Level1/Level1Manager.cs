@@ -108,6 +108,7 @@ public class Level1Manager : MonoBehaviour
         for (int i = 0; i < dropObj.Count; i++)
         {
             dropObj[i].GetComponent<Rigidbody>().useGravity = true;
+            dropObj[i].GetComponent<Rigidbody>().isKinematic = false;
         }
         dropTimer = true;
 
