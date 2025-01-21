@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,12 @@ public class Crash : MonoBehaviour
         {
             Debug.Log("s");
             level2UIManager.CompetitionOpen();
+        }
+        else if (other.gameObject.layer == 13)
+        {
+            transform.DOLocalRotate(new Vector3(transform.rotation.x, -90, transform.rotation.z), .5f).SetEase(Ease.Linear);
+            Vector3 camRot = Camera.main.transform.localEulerAngles;
+            Camera.main.transform.DOLocalRotate(new Vector3(camRot.x, -90, camRot.z), .5f).SetEase(Ease.Linear);
         }
     }
 }
