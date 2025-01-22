@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,16 +9,17 @@ using UnityEngine.UI;
 public class Info : MonoBehaviour
 {
     [SerializeField] List<Button> answers;
-    [SerializeField] GameObject info, objectInfo;
+    [SerializeField] GameObject info, objectInfo, turn, player;
     [SerializeField] List<string> infos;
     [SerializeField] Sprite injuredBird;
     [SerializeField] Level1Manager level1Manager;
     [SerializeField] List<Competition> competition;
     public int infoId;
-    int questionId;
+    int questionId, turnId;
     bool answer;
     TextMeshProUGUI infoText, objectInfoText;
     Button collectBtn;
+    TurnProp turnProp;
     void Start()
     {
         infoText = info.GetComponentInChildren<TextMeshProUGUI>();
@@ -35,6 +37,16 @@ public class Info : MonoBehaviour
         {
             int j = i;
             answers[i].onClick.AddListener(delegate { ToAnswer(j); });
+        }
+
+        if (turn)
+        {
+            Button right = turn.transform.GetChild(0).GetComponent<Button>();
+            Button left = turn.transform.GetChild(1).GetComponent<Button>();
+            Button center = turn.transform.GetChild(2).GetComponent<Button>();
+            right.onClick.AddListener(TurnRight);
+            left.onClick.AddListener(TurnLeft);
+            center.onClick.AddListener(ContinueCenter);
         }
     }
     public void InfoShowing()
@@ -123,6 +135,79 @@ public class Info : MonoBehaviour
 
         answer = false;
         QuestionShowing();
+    }
+    public void TurnSelectOn(TurnProp turnProp)
+    {
+        this.turnProp = turnProp;
+        //if (turnOptions[turnId].turn[0] == false && turnOptions[turnId].turn[1] == false && turnOptions[turnId].turn[2] == false)
+        //{
+        //    return;
+        //}
+        for (int i = 0; i < turn.transform.childCount; i++)
+        {
+            turn.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        if (turnProp.right == true)
+        {
+            turn.transform.GetChild(0).gameObject.SetActive(true);
+        }
+        if (turnProp.left == true)
+        {
+            turn.transform.GetChild(1).gameObject.SetActive(true);
+        }
+        if (turnProp.center == true)
+        {
+            turn.transform.GetChild(2).gameObject.SetActive(true);
+        }
+        turn.SetActive(true);
+    }
+    void TurnRight()
+    {
+        turn.SetActive(false);
+        Time.timeScale = 1;
+        player.transform.DOLocalRotate(new Vector3(player.transform.rotation.x, 90, player.transform.rotation.z), .5f).SetEase(Ease.Linear);
+        Vector3 camRot = Camera.main.transform.localEulerAngles;
+        Camera.main.transform.DOLocalRotate(new Vector3(camRot.x, 90, camRot.z), .5f).SetEase(Ease.Linear);
+
+        if (turnProp.correctPath[0] == false)
+        {
+            InfoChange("Burada güvenli deðilsin! Hemen baþka bir yola git!");
+        }
+        else
+        {
+            InfoChange("Burada güvenlisin! Bu yoldan devam et!");
+        }
+    }
+    void TurnLeft()
+    {
+        turn.SetActive(false);
+        Time.timeScale = 1;
+        player.transform.DOLocalRotate(new Vector3(player.transform.rotation.x, -90, player.transform.rotation.z), .5f).SetEase(Ease.Linear);
+        Vector3 camRot = Camera.main.transform.localEulerAngles;
+        Camera.main.transform.DOLocalRotate(new Vector3(camRot.x, -90, camRot.z), .5f).SetEase(Ease.Linear);
+
+        if (turnProp.correctPath[1] == false)
+        {
+            InfoChange("Burada güvenli deðilsin! Hemen baþka bir yola git!");
+        }
+        else
+        {
+            InfoChange("Burada güvenlisin! Bu yoldan devam et!");
+        }
+    }
+    void ContinueCenter()
+    {
+        turn.SetActive(false);
+        Time.timeScale = 1;
+
+        if (turnProp.correctPath[2] == false)
+        {
+            InfoChange("Burada güvenli deðilsin! Hemen baþka bir yola git!");
+        }
+        else
+        {
+            InfoChange("Burada güvenlisin! Bu yoldan devam et!");
+        }
     }
 }
 [System.Serializable]
