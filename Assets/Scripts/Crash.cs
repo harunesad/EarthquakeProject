@@ -32,6 +32,10 @@ public class Crash : MonoBehaviour
                 level2UIManager.GameoverOpen();
             }
         }
+        else if (collision.gameObject.layer == 17)
+        {
+            level3UIManager.GameoverOpen();
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -51,6 +55,11 @@ public class Crash : MonoBehaviour
         else if (other.gameObject.layer == 15)
         {
             Time.timeScale = 0;
+        }
+        else if (other.gameObject.layer == 16)
+        {
+            Vector3 obstacleRot = other.transform.parent.localEulerAngles;
+            other.transform.parent.DOLocalRotate(new Vector3(obstacleRot.x, obstacleRot.y, 90), .5f).SetEase(Ease.Linear);
         }
     }
 }

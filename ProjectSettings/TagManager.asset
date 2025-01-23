@@ -21,8 +21,8 @@ TagManager:
   - Turn
   - Gameover
   - GameFinish
-  - 
-  - 
+  - ObstacleActive
+  - Obstacle
   - 
   - 
   - 
