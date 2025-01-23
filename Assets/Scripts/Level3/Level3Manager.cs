@@ -14,13 +14,20 @@ public class Level3Manager : MonoBehaviour
     }
     void Update()
     {
-        player.transform.Translate(Vector3.forward * Time.deltaTime * 5);
+        player.transform.position += (Time.deltaTime * player.transform.forward * 5);
+        player.transform.position = new Vector3(player.transform.position.x, .25f, player.transform.position.z);
+        //player.transform.Translate(Vector3.forward * Time.deltaTime * 5);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit, 100, groundLayer))
         {
-            player.DOMoveX(hit.point.x, Mathf.Abs(player.transform.position.x - hit.point.x) / 3).SetEase(Ease.Linear);
-            //Vector3 playerPos = player.transform.position;
-            //player.transform.position = Vector3.Lerp(playerPos, new Vector3(hit.point.x, playerPos.y, playerPos.z), Time.deltaTime * 10);
+            if (hit.transform.name.EndsWith("X"))
+            {
+                player.DOMoveX(hit.point.x, Mathf.Abs(player.position.x - hit.point.x) / 3).SetEase(Ease.Linear);
+            }
+            else if (hit.transform.name.EndsWith("Z"))
+            {
+                player.DOMoveZ(hit.point.z, Mathf.Abs(player.position.z - hit.point.z) / 3).SetEase(Ease.Linear);
+            }
         }
     }
 }

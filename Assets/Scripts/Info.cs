@@ -165,9 +165,10 @@ public class Info : MonoBehaviour
     {
         turn.SetActive(false);
         Time.timeScale = 1;
-        player.transform.DOLocalRotate(new Vector3(player.transform.rotation.x, 90, player.transform.rotation.z), .5f).SetEase(Ease.Linear);
+        Vector3 playerRot = Camera.main.transform.localEulerAngles;
+        player.transform.DOLocalRotate(new Vector3(playerRot.x, playerRot.y + 90, playerRot.z), .5f).SetEase(Ease.Linear);
         Vector3 camRot = Camera.main.transform.localEulerAngles;
-        Camera.main.transform.DOLocalRotate(new Vector3(camRot.x, 90, camRot.z), .5f).SetEase(Ease.Linear);
+        Camera.main.transform.DOLocalRotate(new Vector3(camRot.x, camRot.y + 90, camRot.z), .5f).SetEase(Ease.Linear);
 
         if (turnProp.correctPath[0] == false)
         {
@@ -182,9 +183,10 @@ public class Info : MonoBehaviour
     {
         turn.SetActive(false);
         Time.timeScale = 1;
-        player.transform.DOLocalRotate(new Vector3(player.transform.rotation.x, -90, player.transform.rotation.z), .5f).SetEase(Ease.Linear);
+        Vector3 playerRot = Camera.main.transform.localEulerAngles;
+        player.transform.DOLocalRotate(new Vector3(playerRot.x, playerRot.y - 90, playerRot.z), .5f).SetEase(Ease.Linear);
         Vector3 camRot = Camera.main.transform.localEulerAngles;
-        Camera.main.transform.DOLocalRotate(new Vector3(camRot.x, -90, camRot.z), .5f).SetEase(Ease.Linear);
+        Camera.main.transform.DOLocalRotate(new Vector3(camRot.x, camRot.y - 90, camRot.z), .5f).SetEase(Ease.Linear);
 
         if (turnProp.correctPath[1] == false)
         {
