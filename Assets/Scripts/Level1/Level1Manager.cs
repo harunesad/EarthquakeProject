@@ -30,7 +30,7 @@ public class Level1Manager : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100, hideLayer))
             {
                 Debug.Log("Animation is palyþng");
-                player.SetDestination(hit.transform.position);
+                player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
                 //move = true;
             }
             else if (Physics.Raycast(ray, out hit, 100, bagLayer))
@@ -78,7 +78,7 @@ public class Level1Manager : MonoBehaviour
         }
         else if (time < 0 && !bagCollect && !nextLevel)
         {
-            level1UIManager.GameoverOpen();
+            level1UIManager.GameoverOpen("Çantayý toplamalýydýn.");
         }
         if (collectCount == 0)
         {

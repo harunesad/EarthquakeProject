@@ -69,7 +69,7 @@ public class Level1UIManager : MonoBehaviour
             }
             else if (info.infoId == 2) 
             {
-                GameoverOpen();
+                GameoverOpen("Gerekli ilk yardým malzemelerini süre bitmeden toplamalýydýn.");
             }
             //NextLevel();
         }
@@ -145,8 +145,9 @@ public class Level1UIManager : MonoBehaviour
             timer = true;
         });
     }
-    public void GameoverOpen()
+    public void GameoverOpen(string description)
     {
+        gameOverMenu.GetComponentInChildren<TextMeshProUGUI>().text = description;
         gameOverMenu.SetActive(true);
         Time.timeScale = 0;
     }

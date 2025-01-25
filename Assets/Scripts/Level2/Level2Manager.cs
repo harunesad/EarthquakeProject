@@ -28,14 +28,14 @@ public class Level2Manager : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100, hideLayer))
             {
                 Debug.Log("Animation is palyþng");
-                player.SetDestination(hit.transform.position);
+                player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
                 //move = true;
                 level2UIManager.info.InfoChange("Alice, burasý güvenli!");
             }
             else if (Physics.Raycast(ray, out hit, 100, trapLayer))
             {
                 Debug.Log("Animation is palyþng");
-                player.SetDestination(hit.transform.position);
+                player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
                 //move = true;
                 level2UIManager.info.InfoChange("Alice, burasý güvenli deðil! Sýranýn altýna geç ve baþýný koru!");
             }
