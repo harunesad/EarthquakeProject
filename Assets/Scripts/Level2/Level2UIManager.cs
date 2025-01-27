@@ -128,12 +128,12 @@ public class Level2UIManager : MonoBehaviour
         bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
             timeFinishBtn.gameObject.SetActive(false);
-            level2Manager.NextPosition();
-            Vector3 camPos = Camera.main.transform.position;
+            //level2Manager.NextPosition();
+            //Vector3 camPos = Camera.main.transform.position;
             //Camera.main.transform.position = new Vector3(camPos.x, 7, camPos.z);
-            Camera.main.transform.localEulerAngles = camRot;
-            environment1.SetActive(false);
-            environment2.SetActive(true);
+            //Camera.main.transform.localEulerAngles = camRot;
+            //environment1.SetActive(false);
+            //environment2.SetActive(true);
             info.InfoShowing();
             time = 60;
             timeText.text = ((int)time).ToString();
@@ -147,7 +147,7 @@ public class Level2UIManager : MonoBehaviour
         bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
             level2Manager.player.gameObject.SetActive(false);
-            environment2.SetActive(false);
+            environment1.SetActive(false);
             info.QuestionShowing();
             bg.DOFade(0, 1).SetEase(Ease.Linear);
         });

@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Level2Manager : MonoBehaviour
 {
     [SerializeField] Level2UIManager level2UIManager;
-    [SerializeField] LayerMask hideLayer, trapLayer, groundLayer;
+    [SerializeField] LayerMask hideLayer, bagLayer, trapLayer, groundLayer;
     [SerializeField] List<GameObject> dropObj;
     [SerializeField] List<Vector3> pos;
     [SerializeField] GameObject ground;
@@ -15,7 +15,7 @@ public class Level2Manager : MonoBehaviour
     RaycastHit hit;
     float time = 10;
     int posId;
-    bool move = false, dropTimer = false, nextLevel = false;
+    bool move = false, dropTimer = false, bagCollect = false, nextLevel = false;
     void Start()
     {
         
@@ -39,6 +39,13 @@ public class Level2Manager : MonoBehaviour
                 //move = true;
                 level2UIManager.info.InfoChange("Alice, burasý güvenli deðil! Sýranýn altýna geç ve baþýný koru!");
             }
+            else if (Physics.Raycast(ray, out hit, 100, bagLayer))
+            {
+                Debug.Log("Animation is palyþng");
+                player.SetDestination(hit.point);
+                //move = true;
+                bagCollect = true;
+            }
             else if (Physics.Raycast(ray, out hit, 100, groundLayer))
             {
                 player.isStopped = false;
@@ -52,7 +59,7 @@ public class Level2Manager : MonoBehaviour
             time -= Time.deltaTime;
             level2UIManager.timeText.text = ((int)time).ToString();
         }
-        if (time < 0 && !nextLevel)
+        if (time < 0 && bagCollect && !nextLevel)
         {
             Camera.main.GetComponent<CameraShaker>().enabled = false;
             ground.layer = 11;
@@ -62,8 +69,12 @@ public class Level2Manager : MonoBehaviour
             level2UIManager.timeText.gameObject.SetActive(false);
             nextLevel = true;
             level2UIManager.NextLevel();
+            for (int i = 0; i < dropObj.Count; i++)
+            {
+                dropObj[i].layer = 0;
+            }
         }
-        else if (time < 0 && !nextLevel)
+        else if (time < 0 && !bagCollect && !nextLevel)
         {
             level2UIManager.GameoverOpen();
         }
