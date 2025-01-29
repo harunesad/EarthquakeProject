@@ -78,7 +78,7 @@ public class Level1Manager : MonoBehaviour
         }
         else if (time < 0 && !bagCollect && !nextLevel)
         {
-            level1UIManager.GameoverOpen("Çantayý toplamalýydýn.");
+            level1UIManager.GameoverOpen("Çantayý almalýydýn.");
         }
         if (collectCount == 0)
         {

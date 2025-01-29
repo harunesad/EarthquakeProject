@@ -68,7 +68,7 @@ public class Level2UIManager : MonoBehaviour
             }
             else if (info.infoId == 2)
             {
-                GameoverOpen();
+                GameoverOpen("Sýnýfý güvenli bir þekilde terk etmeliydin.");
             }
         }
     }
@@ -152,8 +152,9 @@ public class Level2UIManager : MonoBehaviour
             bg.DOFade(0, 1).SetEase(Ease.Linear);
         });
     }
-    public void GameoverOpen()
+    public void GameoverOpen(string description)
     {
+        gameOverMenu.GetComponentInChildren<TextMeshProUGUI>().text = description;
         gameOverMenu.SetActive(true);
         Time.timeScale = 0;
     }

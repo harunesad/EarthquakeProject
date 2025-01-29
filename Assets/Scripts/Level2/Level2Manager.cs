@@ -76,7 +76,7 @@ public class Level2Manager : MonoBehaviour
         }
         else if (time < 0 && !bagCollect && !nextLevel)
         {
-            level2UIManager.GameoverOpen();
+            level2UIManager.GameoverOpen("Çantayý almalýydýn.");
         }
     }
     public IEnumerator Dropping()
