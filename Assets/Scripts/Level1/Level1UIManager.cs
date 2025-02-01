@@ -9,10 +9,10 @@ using UnityEngine.UI;
 public class Level1UIManager : MonoBehaviour
 {
     [SerializeField] Button resumeMenuBtn, resumeBtn, resumeCloseBtn, resumeRestartBtn, gameoverRestartBtn, resumeExitBtn, gameoverExitBtn,
-        timeFinishBtn;
+        timeFinishBtn, soundOn, soundOff, apply;
     [SerializeField] GameObject resumeMenu, gameOverMenu;
     [SerializeField] Slider musicSlider, effectSlider;
-    [SerializeField] AudioSource music, effect;
+    [SerializeField] AudioSource music, effect, select;
     [SerializeField] CanvasGroup bg;
     [SerializeField] Level1Manager level1Manager;
     [SerializeField] Vector3 camRot;
@@ -23,16 +23,22 @@ public class Level1UIManager : MonoBehaviour
     bool timer = false;
     void Start()
     {
-        if (PlayerPrefs.HasKey("Music"))
+        //if (PlayerPrefs.HasKey("Music"))
+        //{
+        //    musicSlider.value = PlayerPrefs.GetFloat("Music");
+        //}
+        //if (PlayerPrefs.HasKey("Effect"))
+        //{
+        //    effectSlider.value = PlayerPrefs.GetFloat("Effect");
+        //}
+        if (PlayerPrefs.HasKey("OnOff"))
         {
-            musicSlider.value = PlayerPrefs.GetFloat("Music");
-        }
-        if (PlayerPrefs.HasKey("Effect"))
-        {
-            effectSlider.value = PlayerPrefs.GetFloat("Effect");
+            musicSlider.value = PlayerPrefs.GetFloat("OnOff");
+            effectSlider.value = PlayerPrefs.GetFloat("OnOff");
         }
         music.volume = musicSlider.value;
         effect.volume = effectSlider.value;
+        select.volume = musicSlider.value;
         music.Play();
 
         resumeMenuBtn.onClick.AddListener(ResumeMenuOpen);
@@ -43,11 +49,14 @@ public class Level1UIManager : MonoBehaviour
         gameoverRestartBtn.onClick.AddListener(RestartGame);
         gameoverExitBtn.onClick.AddListener(ExitGame);
         timeFinishBtn.onClick.AddListener(TimeFinish);
+        soundOn.onClick.AddListener(delegate { SoundOnOff(true); });
+        soundOff.onClick.AddListener(delegate { SoundOnOff(false); });
+        apply.onClick.AddListener(Apply);
 
-        musicSlider.onValueChanged.AddListener(delegate { SoundChanged(musicSlider, music, "Music"); });
-        effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
+        //musicSlider.onValueChanged.AddListener(delegate { SoundChanged(musicSlider, music, "Music"); });
+        //effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
 
-        TimerStart();
+        //TimerStart();
     }
     private void Update()
     {
@@ -89,11 +98,42 @@ public class Level1UIManager : MonoBehaviour
         resumeMenu.SetActive(false);
         Time.timeScale = 1;
     }
-    void SoundChanged(Slider slider, AudioSource source, string key)
+    void SoundOnOff(bool on)
     {
-        PlayerPrefs.SetFloat(key, slider.value);
-        source.volume = slider.value;
+        if (on)
+        {
+            music.volume = 1;
+            effect.volume = 1;
+            select.volume = 1;
+            if (!music.isPlaying)
+            {
+                music.Play();
+            }
+            PlayerPrefs.SetFloat("OnOff", 1);
+        }
+        else
+        {
+            music.Stop();
+            music.volume = 0;
+            effect.volume = 0;
+            select.volume = 0;
+            PlayerPrefs.SetFloat("OnOff", 0);
+        }
     }
+    void Apply()
+    {
+        bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            info.info.SetActive(false);
+            apply.gameObject.SetActive(false);
+            TimerStart();
+        });
+    }
+    //void SoundChanged(Slider slider, AudioSource source, string key)
+    //{
+    //    //PlayerPrefs.SetFloat(key, slider.value);
+    //    source.volume = slider.value;
+    //}
     void RestartGame()
     {
         effect.Play();
@@ -138,6 +178,7 @@ public class Level1UIManager : MonoBehaviour
             environment1.SetActive(false);
             environment2.SetActive(true);
             info.InfoShowing();
+            StartCoroutine(info.InfoClose());
             bg.DOFade(0, 1).SetEase(Ease.Linear);
             time = 60;
             timeText.text = ((int)time).ToString();

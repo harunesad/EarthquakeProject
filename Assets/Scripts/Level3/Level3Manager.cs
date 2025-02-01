@@ -15,7 +15,7 @@ public class Level3Manager : MonoBehaviour
     void Update()
     {
         player.transform.position += (Time.deltaTime * player.transform.forward * 5);
-        player.transform.position = new Vector3(player.transform.position.x, .25f, player.transform.position.z);
+        player.transform.position = new Vector3(player.transform.position.x, 1, player.transform.position.z);
         //player.transform.Translate(Vector3.forward * Time.deltaTime * 5);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit, 100, groundLayer))

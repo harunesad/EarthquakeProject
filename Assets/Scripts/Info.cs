@@ -9,11 +9,14 @@ using UnityEngine.UI;
 public class Info : MonoBehaviour
 {
     [SerializeField] List<Button> answers;
-    [SerializeField] GameObject info, objectInfo, turn, player;
+    [SerializeField] GameObject objectInfo, turn, player;
     [SerializeField] List<string> infos;
     [SerializeField] Sprite injuredBird;
     [SerializeField] Level1Manager level1Manager;
     [SerializeField] List<Competition> competition;
+    [SerializeField] AudioSource alice;
+    [SerializeField] List<AudioClip> aliceClips;
+    public GameObject info;
     public int infoId;
     int questionId, turnId;
     bool answer;
@@ -48,10 +51,26 @@ public class Info : MonoBehaviour
             left.onClick.AddListener(TurnLeft);
             center.onClick.AddListener(ContinueCenter);
         }
+
+        if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            StartCoroutine(InfoClose());
+        }
     }
     public void InfoShowing()
     {
-        if (infoId == 1)
+        if (alice.isPlaying && aliceClips.Count > 0)
+        {
+            alice.Stop();
+            alice.clip = aliceClips[infoId];
+            alice.Play();
+        }
+        else if (!alice.isPlaying && aliceClips.Count > 0)
+        {
+            alice.clip = aliceClips[infoId];
+            alice.Play();
+        }
+        if (infoId == 2)
         {
             info.GetComponent<Image>().sprite = injuredBird;
         }
@@ -62,6 +81,13 @@ public class Info : MonoBehaviour
     public void InfoChange(string message)
     {
         infoText.text = message;
+        info.SetActive(true);
+        StartCoroutine(InfoClose());
+    }
+    public IEnumerator InfoClose()
+    {
+        yield return new WaitForSeconds(2);
+        info.SetActive(false);
     }
     public void ObjectInfoChange(string message)
     {

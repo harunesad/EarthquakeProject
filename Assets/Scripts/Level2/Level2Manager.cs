@@ -11,7 +11,9 @@ public class Level2Manager : MonoBehaviour
     [SerializeField] List<GameObject> dropObj;
     [SerializeField] List<Vector3> pos;
     [SerializeField] GameObject ground;
-    public NavMeshAgent player;
+    [SerializeField] AudioSource selectSource, alice;
+    [SerializeField] AudioClip trueSelect, falseSelect, safe, notSafe;
+    public Transform player;
     RaycastHit hit;
     float time = 10;
     int posId;
@@ -27,32 +29,87 @@ public class Level2Manager : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, 100, hideLayer))
             {
-                Debug.Log("Animation is palyþng");
-                player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
+                if (selectSource.isPlaying)
+                {
+                    selectSource.Stop();
+                    selectSource.clip = trueSelect;
+                    selectSource.Play();
+                }
+                else
+                {
+                    selectSource.clip = trueSelect;
+                    selectSource.Play();
+                }
+                player.position = hit.transform.GetComponent<HideProp>().pos;
+                //player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
                 //move = true;
-                level2UIManager.info.InfoChange("Alice, burasý güvenli!");
+                if (alice.isPlaying && safe)
+                {
+                    alice.Stop();
+                    alice.clip = safe;
+                    alice.Play();
+                }
+                else if (!alice.isPlaying && safe)
+                {
+                    alice.clip = safe;
+                    alice.Play();
+                }
+                level2UIManager.info.InfoChange("Alice, yaþam üçgenini doðru uyguladýn!");
             }
             else if (Physics.Raycast(ray, out hit, 100, trapLayer))
             {
-                Debug.Log("Animation is palyþng");
-                player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
+                if (selectSource.isPlaying)
+                {
+                    selectSource.Stop();
+                    selectSource.clip = falseSelect;
+                    selectSource.Play();
+                }
+                else
+                {
+                    selectSource.clip = falseSelect;
+                    selectSource.Play();
+                }
+                player.position = hit.transform.GetComponent<HideProp>().pos;
+                //player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
                 //move = true;
-                level2UIManager.info.InfoChange("Alice, burasý güvenli deðil! Sýranýn altýna geç ve baþýný koru!");
+                if (alice.isPlaying && notSafe)
+                {
+                    alice.Stop();
+                    alice.clip = notSafe;
+                    alice.Play();
+                }
+                else if (!alice.isPlaying && notSafe)
+                {
+                    alice.clip = notSafe;
+                    alice.Play();
+                }
+                level2UIManager.info.InfoChange("Alis, burasý güvenli deðil! Sýranýn yanýna geç ve baþýný koru!");
             }
             else if (Physics.Raycast(ray, out hit, 100, bagLayer))
             {
-                Debug.Log("Animation is palyþng");
-                player.SetDestination(hit.point);
+                if (selectSource.isPlaying)
+                {
+                    selectSource.Stop();
+                    selectSource.clip = trueSelect;
+                    selectSource.Play();
+                }
+                else
+                {
+                    selectSource.clip = trueSelect;
+                    selectSource.Play();
+                }
+                player.position = hit.transform.GetComponent<HideProp>().pos;
+                hit.transform.gameObject.SetActive(false);
+                //player.SetDestination(hit.point);
                 //move = true;
                 bagCollect = true;
             }
-            else if (Physics.Raycast(ray, out hit, 100, groundLayer))
-            {
-                player.isStopped = false;
-                Debug.Log("Animation is palyþng");
-                player.SetDestination(hit.point);
-                //move = true;
-            }
+            //else if (Physics.Raycast(ray, out hit, 100, groundLayer))
+            //{
+            //    player.isStopped = false;
+            //    player.SetDestination(hit.point);
+            //    //move = true;
+            //}
         }
         if (dropTimer)
         {
@@ -64,7 +121,7 @@ public class Level2Manager : MonoBehaviour
             Camera.main.GetComponent<CameraShaker>().enabled = false;
             ground.layer = 11;
             move = false;
-            player.isStopped = true;
+            //player.isStopped = true;
             dropTimer = false;
             level2UIManager.timeText.gameObject.SetActive(false);
             nextLevel = true;
@@ -99,7 +156,7 @@ public class Level2Manager : MonoBehaviour
         dropTimer = true;
 
         Camera.main.GetComponent<CameraShaker>().enabled = true;
-        CameraShaker.Instance.StartShake(2, 4, .1f);
+        CameraShaker.Instance.StartShake(.5f, 4, .1f);
     }
     public void NextPosition()
     {

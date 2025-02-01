@@ -2,6 +2,8 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Crash : MonoBehaviour
 {
@@ -10,10 +12,15 @@ public class Crash : MonoBehaviour
     [SerializeField] Level3UIManager level3UIManager;
     [SerializeField] GameObject environment2;
     [SerializeField] Info info;
-
+    [SerializeField] Button restart;
+    [SerializeField] AudioSource alice;
+    [SerializeField] AudioClip gameFinish;
     void Start()
     {
-        
+        if (restart)
+        {
+            restart.onClick.AddListener(Restart);
+        }
     }
     void Update()
     {
@@ -39,11 +46,11 @@ public class Crash : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 12)
-        {
-            level2UIManager.CompetitionOpen();
-        }
-        else if (other.gameObject.layer == 13)
+        //if (other.gameObject.layer == 12)
+        //{
+        //    level2UIManager.CompetitionOpen();
+        //}
+        if (other.gameObject.layer == 13)
         {
             Time.timeScale = 0;
             info.TurnSelectOn(other.GetComponent<TurnProp>());
@@ -54,12 +61,23 @@ public class Crash : MonoBehaviour
         }
         else if (other.gameObject.layer == 15)
         {
+            if (gameFinish)
+            {
+                alice.clip = gameFinish;
+            }
+            alice.Play();
+            restart.gameObject.SetActive(true);
             Time.timeScale = 0;
+            info.InfoChange("Harika Alis! Güvenli bölgedesin! Deprem sýrasýnda sakin kalýp, doðru kararlar alarak güvenli bir yere ulaþtýk.");
         }
         else if (other.gameObject.layer == 16)
         {
             Vector3 obstacleRot = other.transform.parent.localEulerAngles;
             other.transform.parent.DOLocalRotate(new Vector3(obstacleRot.x, obstacleRot.y, 90), .5f).SetEase(Ease.Linear);
         }
+    }
+    void Restart()
+    {
+        SceneManager.LoadScene(0);
     }
 }

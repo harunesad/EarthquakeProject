@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class Level3UIManager : MonoBehaviour
 {
-    [SerializeField] Button resumeMenuBtn, resumeBtn, resumeCloseBtn, resumeRestartBtn, gameoverRestartBtn, resumeExitBtn, gameoverExitBtn;
+    [SerializeField] Button resumeMenuBtn, resumeBtn, resumeCloseBtn, resumeRestartBtn, gameoverRestartBtn, resumeExitBtn, gameoverExitBtn
+        , soundOn, soundOff;
     [SerializeField] GameObject resumeMenu, gameOverMenu;
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, effect;
@@ -16,13 +17,18 @@ public class Level3UIManager : MonoBehaviour
     public Info info;
     void Start()
     {
-        if (PlayerPrefs.HasKey("Music"))
+        //if (PlayerPrefs.HasKey("Music"))
+        //{
+        //    musicSlider.value = PlayerPrefs.GetFloat("Music");
+        //}
+        //if (PlayerPrefs.HasKey("Effect"))
+        //{
+        //    effectSlider.value = PlayerPrefs.GetFloat("Effect");
+        //}
+        if (PlayerPrefs.HasKey("OnOff"))
         {
-            musicSlider.value = PlayerPrefs.GetFloat("Music");
-        }
-        if (PlayerPrefs.HasKey("Effect"))
-        {
-            effectSlider.value = PlayerPrefs.GetFloat("Effect");
+            musicSlider.value = PlayerPrefs.GetFloat("OnOff");
+            effectSlider.value = PlayerPrefs.GetFloat("OnOff");
         }
         music.volume = musicSlider.value;
         effect.volume = effectSlider.value;
@@ -35,9 +41,11 @@ public class Level3UIManager : MonoBehaviour
         resumeCloseBtn.onClick.AddListener(ResumeMenuClose);
         gameoverRestartBtn.onClick.AddListener(RestartGame);
         gameoverExitBtn.onClick.AddListener(ExitGame);
+        soundOn.onClick.AddListener(delegate { SoundOnOff(true); });
+        soundOff.onClick.AddListener(delegate { SoundOnOff(false); });
 
-        musicSlider.onValueChanged.AddListener(delegate { SoundChanged(musicSlider, music, "Music"); });
-        effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
+        //musicSlider.onValueChanged.AddListener(delegate { SoundChanged(musicSlider, music, "Music"); });
+        //effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
     }
     void Update()
     {
@@ -58,11 +66,31 @@ public class Level3UIManager : MonoBehaviour
         resumeMenu.SetActive(false);
         Time.timeScale = 1;
     }
-    void SoundChanged(Slider slider, AudioSource source, string key)
+    void SoundOnOff(bool on)
     {
-        PlayerPrefs.SetFloat(key, slider.value);
-        source.volume = slider.value;
+        if (on)
+        {
+            music.volume = 1;
+            effect.volume = 1;
+            if (!music.isPlaying)
+            {
+                music.Play();
+            }
+            PlayerPrefs.SetFloat("OnOff", 1);
+        }
+        else
+        {
+            music.Stop();
+            music.volume = 0;
+            effect.volume = 0;
+            PlayerPrefs.SetFloat("OnOff", 0);
+        }
     }
+    //void SoundChanged(Slider slider, AudioSource source, string key)
+    //{
+    //    PlayerPrefs.SetFloat(key, slider.value);
+    //    source.volume = slider.value;
+    //}
     void RestartGame()
     {
         effect.Play();

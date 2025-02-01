@@ -12,7 +12,9 @@ public class Level1Manager : MonoBehaviour
     [SerializeField] List<GameObject> dropObj;
     [SerializeField] List<Vector3> pos;
     [SerializeField] int collectCount;
-    public NavMeshAgent player;
+    [SerializeField] AudioSource selectSource, alice;
+    [SerializeField] AudioClip trueSelect, falseSelect, finish;
+    public Transform player;
     RaycastHit hit;
     Transform collectObj;
     float time = 10;
@@ -29,22 +31,73 @@ public class Level1Manager : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, 100, hideLayer))
             {
-                Debug.Log("Animation is palyþng");
-                player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
+                player.position = hit.transform.GetComponent<HideProp>().pos;
+                //player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
                 //move = true;
+                if (hit.transform.name == "table")
+                {
+                    if (selectSource.isPlaying)
+                    {
+                        selectSource.Stop();
+                        selectSource.clip = falseSelect;
+                        selectSource.Play();
+                    }
+                    else
+                    {
+                        selectSource.clip = falseSelect;
+                        selectSource.Play();
+                    }
+                }
+                else
+                {
+                    if (selectSource.isPlaying)
+                    {
+                        selectSource.Stop();
+                        selectSource.clip = trueSelect;
+                        selectSource.Play();
+                    }
+                    else
+                    {
+                        selectSource.clip = trueSelect;
+                        selectSource.Play();
+                    }
+                }
             }
             else if (Physics.Raycast(ray, out hit, 100, bagLayer))
             {
-                Debug.Log("Animation is palyþng");
-                player.SetDestination(hit.transform.position);
+                if (selectSource.isPlaying)
+                {
+                    selectSource.Stop();
+                    selectSource.clip = trueSelect;
+                    selectSource.Play();
+                }
+                else
+                {
+                    selectSource.clip = trueSelect;
+                    selectSource.Play();
+                }
+                player.position = hit.transform.GetComponent<HideProp>().pos;
+                hit.transform.gameObject.SetActive(false);
+                //player.SetDestination(hit.transform.position);
                 //move = true;
                 bagCollect = true;
             }
             else if (Physics.Raycast(ray, out hit, 100, collectLayer) && collectCount != 0)
             {
-                player.isStopped = false;
-                Debug.Log("Animation is palyþng");
-                player.SetDestination(hit.transform.position);
+                if (selectSource.isPlaying)
+                {
+                    selectSource.Stop();
+                    selectSource.clip = trueSelect;
+                    selectSource.Play();
+                }
+                else
+                {
+                    selectSource.clip = trueSelect;
+                    selectSource.Play();
+                }
+                //player.isStopped = false;
+                player.position = hit.transform.position;
+                //player.SetDestination(hit.transform.position);
                 //move = true;
                 level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
                 collectObj = hit.transform;
@@ -52,9 +105,20 @@ public class Level1Manager : MonoBehaviour
             }
             else if (Physics.Raycast(ray, out hit, 100, notCollectLayer) && collectCount != 0)
             {
-                player.isStopped = false;
-                Debug.Log("Animation is palyþng");
-                player.SetDestination(hit.transform.position);
+                if (selectSource.isPlaying)
+                {
+                    selectSource.Stop();
+                    selectSource.clip = falseSelect;
+                    selectSource.Play();
+                }
+                else
+                {
+                    selectSource.clip = falseSelect;
+                    selectSource.Play();
+                }
+                //player.isStopped = false;
+                player.position = hit.transform.position;
+                //player.SetDestination(hit.transform.position);
                 //move = true;
                 level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
                 collectObj = hit.transform;
@@ -70,7 +134,7 @@ public class Level1Manager : MonoBehaviour
         {
             Camera.main.GetComponent<CameraShaker>().enabled = false;
             move = false;
-            player.isStopped = true;
+            //player.isStopped = true;
             dropTimer = false;
             level1UIManager.timeText.gameObject.SetActive(false);
             nextLevel = true;
@@ -88,6 +152,11 @@ public class Level1Manager : MonoBehaviour
     IEnumerator SceneLoad()
     {
         yield return new WaitForSeconds(1);
+        if (finish)
+        {
+            alice.clip = finish;
+            alice.Play();
+        }
         level1UIManager.info.InfoChange("Tebrikler");
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -95,16 +164,6 @@ public class Level1Manager : MonoBehaviour
     public IEnumerator Dropping() 
     {
         yield return new WaitForSeconds(1);
-        //if (!player.hasPath)
-        //{
-        //    player.isStopped = true;
-        //    for (int i = 0; i < dropObj.Count; i++)
-        //    {
-        //        dropObj[i].GetComponent<Rigidbody>().useGravity = true;
-        //    }
-        //    move = false;
-        //    dropTimer = true;
-        //}
         for (int i = 0; i < dropObj.Count; i++)
         {
             dropObj[i].GetComponent<Rigidbody>().useGravity = true;
@@ -113,7 +172,9 @@ public class Level1Manager : MonoBehaviour
         dropTimer = true;
 
         Camera.main.GetComponent<CameraShaker>().enabled = true;
-        CameraShaker.Instance.StartShake(2, 4, .1f);
+        CameraShaker.Instance.StartShake(.5f, 4, .1f);
+        level1UIManager.info.InfoShowing();
+        StartCoroutine(level1UIManager.info.InfoClose());
     }
     public void NextPosition()
     {
@@ -132,18 +193,4 @@ public class Level1Manager : MonoBehaviour
             level1UIManager.info.InfoChange(collectObj.name + " yanlýþ");
         }
     }
-    //public void RunFinished()
-    //{
-    //    Debug.Log("Hide is playing");
-    //    move = false
-    //}
-    //public void HideFinished()
-    //{
-    //    //Earthquake started
-    //    level1UIManager.TimerStart();
-    //    for (int i = 0; i < dropObj.Count; i++)
-    //    {
-    //        dropObj[i].GetComponent<Rigidbody>().useGravity = true;
-    //    }
-    //}
 }
