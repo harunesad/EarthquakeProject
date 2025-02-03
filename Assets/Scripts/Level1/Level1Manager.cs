@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using EZCameraShake;
+using DG.Tweening;
+using UnityEngine.UI;
 
 public class Level1Manager : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class Level1Manager : MonoBehaviour
     [SerializeField] int collectCount;
     [SerializeField] AudioSource selectSource, alice;
     [SerializeField] AudioClip trueSelect, falseSelect, finish;
+    [SerializeField] List<GameObject> selections;
+    [SerializeField] GameObject bagInside;
     public Transform player;
     RaycastHit hit;
     Transform collectObj;
@@ -27,13 +31,15 @@ public class Level1Manager : MonoBehaviour
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Input.GetMouseButtonDown(0) && !move && !dropTimer)
+        if (Input.GetMouseButtonDown(0) && !dropTimer)
         {
-            if (Physics.Raycast(ray, out hit, 100, hideLayer))
+            if (Physics.Raycast(ray, out hit, 100, hideLayer) && bagCollect && !move)
             {
-                player.position = hit.transform.GetComponent<HideProp>().pos;
+                hit.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+                //player.position = hit.transform.GetComponent<HideProp>().pos;
+                //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
-                //move = true;
+                move = true;
                 if (hit.transform.name == "table")
                 {
                     if (selectSource.isPlaying)
@@ -47,6 +53,7 @@ public class Level1Manager : MonoBehaviour
                         selectSource.clip = falseSelect;
                         selectSource.Play();
                     }
+                    level1UIManager.GameoverOpen();
                 }
                 else
                 {
@@ -61,10 +68,18 @@ public class Level1Manager : MonoBehaviour
                         selectSource.clip = trueSelect;
                         selectSource.Play();
                     }
+                    level1UIManager.bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
+                    {
+                        Camera.main.transform.localEulerAngles = new Vector3(0, 0, 0);
+                        level1UIManager.info.InfoShowing();
+                        StartCoroutine(BagInside());
+                    });
                 }
             }
-            else if (Physics.Raycast(ray, out hit, 100, bagLayer))
+            else if (Physics.Raycast(ray, out hit, 100, bagLayer) && !level1UIManager.info.info.activeSelf && !move)
             {
+                hit.transform.gameObject.layer = 0;
+                hit.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                 if (selectSource.isPlaying)
                 {
                     selectSource.Stop();
@@ -77,10 +92,10 @@ public class Level1Manager : MonoBehaviour
                     selectSource.Play();
                 }
                 player.position = hit.transform.GetComponent<HideProp>().pos;
-                hit.transform.gameObject.SetActive(false);
+                StartCoroutine(BagMissing(hit));
+                //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.position);
                 //move = true;
-                bagCollect = true;
             }
             else if (Physics.Raycast(ray, out hit, 100, collectLayer) && collectCount != 0)
             {
@@ -96,12 +111,15 @@ public class Level1Manager : MonoBehaviour
                     selectSource.Play();
                 }
                 //player.isStopped = false;
-                player.position = hit.transform.position;
+                //player.position = hit.transform.position;
+                //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.position);
                 //move = true;
-                level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
+                //level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
                 collectObj = hit.transform;
+                collectObj.gameObject.SetActive(false);
                 trueObj = true;
+                collectCount--;
             }
             else if (Physics.Raycast(ray, out hit, 100, notCollectLayer) && collectCount != 0)
             {
@@ -117,11 +135,13 @@ public class Level1Manager : MonoBehaviour
                     selectSource.Play();
                 }
                 //player.isStopped = false;
-                player.position = hit.transform.position;
+                //player.position = hit.transform.position;
+                //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.position);
                 //move = true;
-                level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
+                //level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
                 collectObj = hit.transform;
+                collectObj.gameObject.SetActive(false);
                 trueObj = false;
             }
         }
@@ -142,39 +162,97 @@ public class Level1Manager : MonoBehaviour
         }
         else if (time < 0 && !bagCollect && !nextLevel)
         {
-            level1UIManager.GameoverOpen("Çantayý almalýydýn.");
+            level1UIManager.GameoverOpen();
         }
         if (collectCount == 0)
         {
-            StartCoroutine(SceneLoad());
+            level1UIManager.bg.alpha = 0;
+            level1UIManager.bg.gameObject.SetActive(true);
+            level1UIManager.bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                level1UIManager.info.InfoShowing();
+                StartCoroutine(SceneLoad());
+            });
         }
+    }
+    IEnumerator BagMissing(RaycastHit hit)
+    {
+        yield return new WaitForSeconds(1);
+        hit.transform.parent.gameObject.SetActive(false);
+        level1UIManager.bg.DOFade(1, 1).OnComplete(() =>
+        {
+            //level1UIManager.environment1.SetActive(false);
+            level1UIManager.info.InfoShowing();
+        });
+        yield return new WaitForSeconds(8);
+        level1UIManager.info.info.SetActive(false);
+        //level1UIManager.environment1.SetActive(true);
+        level1UIManager.bg.DOFade(0, 1).OnComplete(() =>
+        {
+            StartCoroutine(Dropping());
+        });
+        yield return new WaitForSeconds(2);
+        level1UIManager.bg.GetComponent<Image>().color = new Color(0, 0, 0, .5f);
+        level1UIManager.bg.DOFade(1, 1).OnComplete(() =>
+        {
+            //level1UIManager.environment1.SetActive(false);
+            level1UIManager.info.InfoShowing();
+        });
+        yield return new WaitForSeconds(5);
+        level1UIManager.info.info.SetActive(false);
+        level1UIManager.bg.DOFade(0, 1).OnComplete(() =>
+        {
+            for (int i = 0; i < selections.Count; i++)
+            {
+                selections[i].SetActive(true);
+            }
+            level1UIManager.bg.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            bagCollect = true;
+        });
+    }
+    IEnumerator BagInside()
+    {
+        Camera.main.GetComponent<CameraShaker>().enabled = false;
+        //Deðiþecek süre 15
+        yield return new WaitForSeconds(1);
+        for (int i = 0; i < selections.Count; i++)
+        {
+            selections[i].SetActive(false);
+        }
+        level1UIManager.info.info.SetActive(false);
+        bagInside.gameObject.SetActive(true);
+        level1UIManager.bg.gameObject.SetActive(false);
     }
     IEnumerator SceneLoad()
     {
-        yield return new WaitForSeconds(1);
-        if (finish)
-        {
-            alice.clip = finish;
-            alice.Play();
-        }
-        level1UIManager.info.InfoChange("Tebrikler");
-        yield return new WaitForSeconds(2);
+        //yield return new WaitForSeconds(1);
+        //if (finish)
+        //{
+        //    alice.clip = finish;
+        //    alice.Play();
+        //}
+        //level1UIManager.info.InfoChange("Tebrikler");
+        yield return new WaitForSeconds(8);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     public IEnumerator Dropping() 
     {
-        yield return new WaitForSeconds(1);
-        for (int i = 0; i < dropObj.Count; i++)
-        {
-            dropObj[i].GetComponent<Rigidbody>().useGravity = true;
-            dropObj[i].GetComponent<Rigidbody>().isKinematic = false;
-        }
-        dropTimer = true;
+        yield return new WaitForSeconds(0);
+        //if (!player.gameObject.activeSelf)
+        //{
+        //    level1UIManager.GameoverOpen("Saklanmak için bir yer seçmelisin");
+        //    yield break;
+        //}
+        //for (int i = 0; i < dropObj.Count; i++)
+        //{
+        //    dropObj[i].GetComponent<Rigidbody>().useGravity = true;
+        //    dropObj[i].GetComponent<Rigidbody>().isKinematic = false;
+        //}
+        //dropTimer = true;
 
         Camera.main.GetComponent<CameraShaker>().enabled = true;
         CameraShaker.Instance.StartShake(.5f, 4, .1f);
-        level1UIManager.info.InfoShowing();
-        StartCoroutine(level1UIManager.info.InfoClose());
+        //StartCoroutine(level1UIManager.info.InfoClose());
     }
     public void NextPosition()
     {

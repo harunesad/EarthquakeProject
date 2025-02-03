@@ -14,8 +14,8 @@ public class Info : MonoBehaviour
     [SerializeField] Sprite injuredBird;
     [SerializeField] Level1Manager level1Manager;
     [SerializeField] List<Competition> competition;
-    [SerializeField] AudioSource alice;
     [SerializeField] List<AudioClip> aliceClips;
+    public AudioSource alice;
     public GameObject info;
     public int infoId;
     int questionId, turnId;
@@ -59,20 +59,20 @@ public class Info : MonoBehaviour
     }
     public void InfoShowing()
     {
-        if (alice.isPlaying && aliceClips.Count > 0)
+        if (alice.isPlaying && aliceClips[infoId] != null)
         {
             alice.Stop();
             alice.clip = aliceClips[infoId];
             alice.Play();
         }
-        else if (!alice.isPlaying && aliceClips.Count > 0)
+        else if (!alice.isPlaying && aliceClips[infoId] != null)
         {
             alice.clip = aliceClips[infoId];
             alice.Play();
         }
         if (infoId == 2)
         {
-            info.GetComponent<Image>().sprite = injuredBird;
+            //info.GetComponent<Image>().sprite = injuredBird;
         }
         infoText.text = infos[infoId];
         info.SetActive(true);
@@ -86,7 +86,7 @@ public class Info : MonoBehaviour
     }
     public IEnumerator InfoClose()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         info.SetActive(false);
     }
     public void ObjectInfoChange(string message)

@@ -41,6 +41,7 @@ public class Level2Manager : MonoBehaviour
                     selectSource.Play();
                 }
                 player.position = hit.transform.GetComponent<HideProp>().pos;
+                player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
                 //move = true;
                 if (alice.isPlaying && safe)
@@ -70,6 +71,7 @@ public class Level2Manager : MonoBehaviour
                     selectSource.Play();
                 }
                 player.position = hit.transform.GetComponent<HideProp>().pos;
+                player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
                 //move = true;
                 if (alice.isPlaying && notSafe)
@@ -99,7 +101,8 @@ public class Level2Manager : MonoBehaviour
                     selectSource.Play();
                 }
                 player.position = hit.transform.GetComponent<HideProp>().pos;
-                hit.transform.gameObject.SetActive(false);
+                //player.gameObject.SetActive(true);
+                hit.transform.parent.gameObject.SetActive(false);
                 //player.SetDestination(hit.point);
                 //move = true;
                 bagCollect = true;
@@ -139,16 +142,11 @@ public class Level2Manager : MonoBehaviour
     public IEnumerator Dropping()
     {
         yield return new WaitForSeconds(1);
-        //if (!player.hasPath)
-        //{
-        //    player.isStopped = true;
-        //    for (int i = 0; i < dropObj.Count; i++)
-        //    {
-        //        dropObj[i].GetComponent<Rigidbody>().useGravity = true;
-        //    }
-        //    move = false;
-        //    dropTimer = true;
-        //}
+        if (!player.gameObject.activeSelf)
+        {
+            level2UIManager.GameoverOpen("Saklanmak için bir yer seçmelisin");
+            yield break;
+        }
         for (int i = 0; i < dropObj.Count; i++)
         {
             dropObj[i].GetComponent<Rigidbody>().useGravity = true;

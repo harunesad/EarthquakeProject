@@ -16,6 +16,7 @@ public class Level2UIManager : MonoBehaviour
     [SerializeField] CanvasGroup bg;
     [SerializeField] Vector3 camRot;
     [SerializeField] GameObject environment1, environment2;
+    [SerializeField] Image cursor;
     public Level2Manager level2Manager;
     public Info info;
     public TextMeshProUGUI timeText;
@@ -55,6 +56,8 @@ public class Level2UIManager : MonoBehaviour
         a.onClick.AddListener(delegate { Answer(true); });
         b.onClick.AddListener(delegate { Answer(false); });
 
+        Cursor.visible = false;
+
         //musicSlider.onValueChanged.AddListener(delegate { SoundChanged(musicSlider, music, "Music"); });
         //effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
 
@@ -63,6 +66,7 @@ public class Level2UIManager : MonoBehaviour
     }
     void Update()
     {
+        cursor.rectTransform.position = Input.mousePosition;
         if (timer == true)
         {
             time -= Time.deltaTime;
@@ -122,6 +126,7 @@ public class Level2UIManager : MonoBehaviour
     }
     void Apply()
     {
+        environment1.SetActive(true);
         bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
             info.info.SetActive(false);
@@ -157,13 +162,13 @@ public class Level2UIManager : MonoBehaviour
     }
     public void TimerStart()
     {
-        if (!timer)
-        {
-            time = 60;
-            timeText.text = ((int)time).ToString();
-            timeText.gameObject.SetActive(true);
-            timer = true;
-        }
+        //if (!timer)
+        //{
+        //    time = 60;
+        //    timeText.text = ((int)time).ToString();
+        //    timeText.gameObject.SetActive(true);
+        //    timer = true;
+        //}
     }
     void Answer(bool result)
     {

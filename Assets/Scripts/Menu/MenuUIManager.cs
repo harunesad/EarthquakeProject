@@ -11,6 +11,7 @@ public class MenuUIManager : MonoBehaviour
     [SerializeField] Button backBtn, playBtn, settingsBtn, creditsBtn, writersBtn, soundOn, soundOff;
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, effect;
+    [SerializeField] Image cursor;
     CanvasGroup currentGroup;
     void Start()
     {
@@ -40,8 +41,14 @@ public class MenuUIManager : MonoBehaviour
         soundOn.onClick.AddListener(delegate { SoundOnOff(true); });
         soundOff.onClick.AddListener(delegate { SoundOnOff(false); });
 
+        Cursor.visible = false;
+
         //musicSlider.onValueChanged.AddListener(delegate { SoundChanged(musicSlider, music, "Music"); });
         //effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
+    }
+    private void Update()
+    {
+        cursor.rectTransform.position = Input.mousePosition;
     }
     void PlayGame()
     {
@@ -71,6 +78,7 @@ public class MenuUIManager : MonoBehaviour
     }
     void SoundOnOff(bool on)
     {
+        effect.Play();
         if (on)
         {
             music.volume = 1;

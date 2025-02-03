@@ -13,10 +13,11 @@ public class Level1UIManager : MonoBehaviour
     [SerializeField] GameObject resumeMenu, gameOverMenu;
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, effect, select;
-    [SerializeField] CanvasGroup bg;
     [SerializeField] Level1Manager level1Manager;
     [SerializeField] Vector3 camRot;
-    [SerializeField] GameObject environment1, environment2;
+    [SerializeField] Image cursor;
+    public GameObject environment1, environment2;
+    public CanvasGroup bg;
     public Info info;
     public TextMeshProUGUI timeText;
     float time = 60;
@@ -53,6 +54,8 @@ public class Level1UIManager : MonoBehaviour
         soundOff.onClick.AddListener(delegate { SoundOnOff(false); });
         apply.onClick.AddListener(Apply);
 
+        Cursor.visible = false;
+
         //musicSlider.onValueChanged.AddListener(delegate { SoundChanged(musicSlider, music, "Music"); });
         //effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
 
@@ -60,6 +63,7 @@ public class Level1UIManager : MonoBehaviour
     }
     private void Update()
     {
+        cursor.rectTransform.position = Input.mousePosition;
         if (timer == true)
         {
             time -= Time.deltaTime;
@@ -78,7 +82,7 @@ public class Level1UIManager : MonoBehaviour
             }
             else if (info.infoId == 2) 
             {
-                GameoverOpen("Gerekli ilk yardým malzemelerini süre bitmeden toplamalýydýn.");
+                GameoverOpen();
             }
             //NextLevel();
         }
@@ -122,11 +126,15 @@ public class Level1UIManager : MonoBehaviour
     }
     void Apply()
     {
+        environment1.SetActive(true);
+        info.info.SetActive(false);
+        info.alice.Stop();
         bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
-            info.info.SetActive(false);
             apply.gameObject.SetActive(false);
-            TimerStart();
+            info.InfoShowing();
+            StartCoroutine(info.InfoClose());
+            //TimerStart();
         });
     }
     //void SoundChanged(Slider slider, AudioSource source, string key)
@@ -158,13 +166,13 @@ public class Level1UIManager : MonoBehaviour
     }
     public void TimerStart()
     {
-        if (!timer)
-        {
-            time = 60;
-            timeText.text = ((int)time).ToString();
-            timeText.gameObject.SetActive(true);
-            timer = true;
-        }
+        //if (!timer)
+        //{
+        //    time = 60;
+        //    timeText.text = ((int)time).ToString();
+        //    timeText.gameObject.SetActive(true);
+        //    timer = true;
+        //}
     }
     public void NextLevel()
     {
@@ -186,9 +194,9 @@ public class Level1UIManager : MonoBehaviour
             timer = true;
         });
     }
-    public void GameoverOpen(string description)
+    public void GameoverOpen()
     {
-        gameOverMenu.GetComponentInChildren<TextMeshProUGUI>().text = description;
+        //gameOverMenu.GetComponentInChildren<TextMeshProUGUI>().text = description;
         gameOverMenu.SetActive(true);
         Time.timeScale = 0;
     }

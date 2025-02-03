@@ -32,7 +32,7 @@ public class Crash : MonoBehaviour
         {
             if (level1UIManager)
             {
-                level1UIManager.GameoverOpen("Deprem sýrasýnda yanlýþ yerde durdun.");
+                level1UIManager.GameoverOpen();
             }
             if (level2UIManager)
             {

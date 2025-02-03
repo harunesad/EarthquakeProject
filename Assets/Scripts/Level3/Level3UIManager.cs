@@ -14,6 +14,7 @@ public class Level3UIManager : MonoBehaviour
     [SerializeField] CanvasGroup bg;
     [SerializeField] Level3Manager level3Manager;
     [SerializeField] Vector3 camRot;
+    [SerializeField] Image cursor;
     public Info info;
     void Start()
     {
@@ -44,12 +45,14 @@ public class Level3UIManager : MonoBehaviour
         soundOn.onClick.AddListener(delegate { SoundOnOff(true); });
         soundOff.onClick.AddListener(delegate { SoundOnOff(false); });
 
+        Cursor.visible = false;
+
         //musicSlider.onValueChanged.AddListener(delegate { SoundChanged(musicSlider, music, "Music"); });
         //effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
     }
     void Update()
     {
-        
+        cursor.rectTransform.position = Input.mousePosition;
     }
     void ResumeMenuOpen()
     {
