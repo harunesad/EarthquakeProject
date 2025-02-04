@@ -2405,8 +2405,8 @@ MonoBehaviour:
   m_text: "Deeplay Creative Studio ve Eylem D\u0131rama \u0130NAN'\u0131n katk\u0131lar\u0131yla
     geli\u015Ftirilmi\u015Ftir."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a248596934b08404eab5b86137420959, type: 2}
+  m_sharedMaterial: {fileID: 558297454825025573, guid: a248596934b08404eab5b86137420959, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

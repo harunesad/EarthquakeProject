@@ -36,7 +36,7 @@ public class Crash : MonoBehaviour
             }
             if (level2UIManager)
             {
-                level2UIManager.GameoverOpen("Deprem sýrasýnda yanlýþ yerde durdun.");
+                level2UIManager.GameoverOpen();
             }
         }
         else if (collision.gameObject.layer == 17)

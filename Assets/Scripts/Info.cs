@@ -20,7 +20,8 @@ public class Info : MonoBehaviour
     public int infoId;
     int questionId, turnId;
     bool answer;
-    TextMeshProUGUI infoText, objectInfoText;
+    TextMeshProUGUI infoText;
+    TextMesh objectInfoText;
     Button collectBtn;
     TurnProp turnProp;
     void Start()
@@ -29,9 +30,9 @@ public class Info : MonoBehaviour
 
         if (objectInfo)
         {
-            objectInfoText = objectInfo.GetComponentInChildren<TextMeshProUGUI>();
-            collectBtn = objectInfo.GetComponentInChildren<Button>();
-            collectBtn.onClick.AddListener(Collect);
+            objectInfoText = objectInfo.GetComponentInChildren<TextMesh>();
+            //collectBtn = objectInfo.GetComponentInChildren<Button>();
+            //collectBtn.onClick.AddListener(Collect);
         }
 
         InfoShowing();

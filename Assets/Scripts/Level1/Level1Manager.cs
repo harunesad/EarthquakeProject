@@ -13,23 +13,29 @@ public class Level1Manager : MonoBehaviour
     [SerializeField] LayerMask hideLayer, bagLayer, collectLayer, notCollectLayer;
     [SerializeField] List<GameObject> dropObj;
     [SerializeField] List<Vector3> pos;
-    [SerializeField] int collectCount;
     [SerializeField] AudioSource selectSource, alice;
     [SerializeField] AudioClip trueSelect, falseSelect, finish;
-    [SerializeField] List<GameObject> selections;
-    [SerializeField] GameObject bagInside;
+    public GameObject bagInside;
+    public List<GameObject> selections;
     public Transform player;
+    public bool bagCollect = false, stop = false;
+    public int collectCount;
     RaycastHit hit;
     Transform collectObj;
     float time = 10;
     int posId;
-    bool move = false, dropTimer = false, bagCollect = false, nextLevel = false, trueObj = false;
+    bool move = false, dropTimer = false, nextLevel = false, trueObj = false;
     void Start()
     {
         
     }
     void Update()
     {
+        if (stop)
+        {
+            StopAllCoroutines();
+            stop = false;
+        }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Input.GetMouseButtonDown(0) && !dropTimer)
         {
@@ -40,7 +46,7 @@ public class Level1Manager : MonoBehaviour
                 //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
                 move = true;
-                if (hit.transform.name == "table")
+                if (hit.transform.name == "table" || hit.transform.name == "carpet" || hit.transform.name == "door")
                 {
                     if (selectSource.isPlaying)
                     {
@@ -115,7 +121,7 @@ public class Level1Manager : MonoBehaviour
                 //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.position);
                 //move = true;
-                //level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
+                level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
                 collectObj = hit.transform;
                 collectObj.gameObject.SetActive(false);
                 trueObj = true;
@@ -139,7 +145,7 @@ public class Level1Manager : MonoBehaviour
                 //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.position);
                 //move = true;
-                //level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
+                level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
                 collectObj = hit.transform;
                 collectObj.gameObject.SetActive(false);
                 trueObj = false;
@@ -170,23 +176,23 @@ public class Level1Manager : MonoBehaviour
             level1UIManager.bg.gameObject.SetActive(true);
             level1UIManager.bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
             {
+                bagInside.SetActive(false);
+                collectCount = -1;
                 level1UIManager.info.InfoShowing();
                 StartCoroutine(SceneLoad());
             });
         }
     }
-    IEnumerator BagMissing(RaycastHit hit)
+    public IEnumerator BagMissing(RaycastHit hit)
     {
         yield return new WaitForSeconds(1);
         hit.transform.parent.gameObject.SetActive(false);
         level1UIManager.bg.DOFade(1, 1).OnComplete(() =>
         {
-            //level1UIManager.environment1.SetActive(false);
             level1UIManager.info.InfoShowing();
         });
         yield return new WaitForSeconds(8);
         level1UIManager.info.info.SetActive(false);
-        //level1UIManager.environment1.SetActive(true);
         level1UIManager.bg.DOFade(0, 1).OnComplete(() =>
         {
             StartCoroutine(Dropping());
@@ -195,7 +201,6 @@ public class Level1Manager : MonoBehaviour
         level1UIManager.bg.GetComponent<Image>().color = new Color(0, 0, 0, .5f);
         level1UIManager.bg.DOFade(1, 1).OnComplete(() =>
         {
-            //level1UIManager.environment1.SetActive(false);
             level1UIManager.info.InfoShowing();
         });
         yield return new WaitForSeconds(5);
@@ -213,8 +218,7 @@ public class Level1Manager : MonoBehaviour
     IEnumerator BagInside()
     {
         Camera.main.GetComponent<CameraShaker>().enabled = false;
-        //Deðiþecek süre 15
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(15);
         for (int i = 0; i < selections.Count; i++)
         {
             selections[i].SetActive(false);

@@ -86,6 +86,10 @@ public class Level1UIManager : MonoBehaviour
             }
             //NextLevel();
         }
+        if (level1Manager.collectCount == 0)
+        {
+            StopAllCoroutines();
+        }
     }
     void ResumeMenuOpen()
     {
@@ -126,15 +130,73 @@ public class Level1UIManager : MonoBehaviour
     }
     void Apply()
     {
+        effect.Play();
         environment1.SetActive(true);
         info.info.SetActive(false);
         info.alice.Stop();
+        level1Manager.stop = true;
+        StopAllCoroutines();
         bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
-            apply.gameObject.SetActive(false);
-            info.InfoShowing();
-            StartCoroutine(info.InfoClose());
+            //apply.gameObject.SetActive(false);
+            if (info.infoId == 1)
+            {
+                info.InfoShowing();
+                StartCoroutine(info.InfoClose());
+            }
+            else if (info.infoId == 2)
+            {
+
+            }
+            else if (info.infoId == 3)
+            {
+                StartCoroutine(level1Manager.Dropping());
+                StartCoroutine(BagMissing());
+            }
+            else if (info.infoId == 4)
+            {
+                for (int i = 0; i < level1Manager.selections.Count; i++)
+                {
+                    level1Manager.selections[i].SetActive(true);
+                }
+                bg.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                level1Manager.bagCollect = true;
+            }
+            else if (info.infoId == 5)
+            {
+                for (int i = 0; i < level1Manager.selections.Count; i++)
+                {
+                    level1Manager.selections[i].SetActive(false);
+                }
+                info.info.SetActive(false);
+                level1Manager.bagInside.gameObject.SetActive(true);
+                bg.gameObject.SetActive(false);
+            }
+            else if (info.infoId == 6)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
             //TimerStart();
+        });
+    }
+    public IEnumerator BagMissing()
+    {
+        yield return new WaitForSeconds(2);
+        bg.GetComponent<Image>().color = new Color(0, 0, 0, .5f);
+        bg.DOFade(1, 1).OnComplete(() =>
+        {
+            info.InfoShowing();
+        });
+        yield return new WaitForSeconds(5);
+        info.info.SetActive(false);
+        bg.DOFade(0, 1).OnComplete(() =>
+        {
+            for (int i = 0; i < level1Manager.selections.Count; i++)
+            {
+                level1Manager.selections[i].SetActive(true);
+            }
+            bg.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            level1Manager.bagCollect = true;
         });
     }
     //void SoundChanged(Slider slider, AudioSource source, string key)

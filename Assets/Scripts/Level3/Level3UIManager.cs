@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +9,7 @@ using UnityEngine.UI;
 public class Level3UIManager : MonoBehaviour
 {
     [SerializeField] Button resumeMenuBtn, resumeBtn, resumeCloseBtn, resumeRestartBtn, gameoverRestartBtn, resumeExitBtn, gameoverExitBtn
-        , soundOn, soundOff;
+        , soundOn, soundOff, apply;
     [SerializeField] GameObject resumeMenu, gameOverMenu;
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, effect;
@@ -44,6 +46,7 @@ public class Level3UIManager : MonoBehaviour
         gameoverExitBtn.onClick.AddListener(ExitGame);
         soundOn.onClick.AddListener(delegate { SoundOnOff(true); });
         soundOff.onClick.AddListener(delegate { SoundOnOff(false); });
+        apply.onClick.AddListener(Apply);
 
         Cursor.visible = false;
 
@@ -89,6 +92,23 @@ public class Level3UIManager : MonoBehaviour
             PlayerPrefs.SetFloat("OnOff", 0);
         }
     }
+    void Apply()
+    {
+        effect.Play();
+        info.info.SetActive(false);
+        info.alice.Stop();
+        StopAllCoroutines();
+        bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            //apply.gameObject.SetActive(false);
+            if (info.infoId == 1)
+            {
+                level3Manager.enabled = true;
+            }
+            //TimerStart();
+        });
+    }
+
     //void SoundChanged(Slider slider, AudioSource source, string key)
     //{
     //    PlayerPrefs.SetFloat(key, slider.value);

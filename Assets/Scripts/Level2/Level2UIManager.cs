@@ -13,10 +13,10 @@ public class Level2UIManager : MonoBehaviour
     [SerializeField] GameObject resumeMenu, gameOverMenu;
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, effect, select;
-    [SerializeField] CanvasGroup bg;
     [SerializeField] Vector3 camRot;
     [SerializeField] GameObject environment1, environment2;
     [SerializeField] Image cursor;
+    public CanvasGroup bg;
     public Level2Manager level2Manager;
     public Info info;
     public TextMeshProUGUI timeText;
@@ -83,7 +83,7 @@ public class Level2UIManager : MonoBehaviour
             }
             else if (info.infoId == 2)
             {
-                GameoverOpen("Sýnýfý güvenli bir þekilde terk etmeliydin.");
+                GameoverOpen();
             }
         }
     }
@@ -126,12 +126,39 @@ public class Level2UIManager : MonoBehaviour
     }
     void Apply()
     {
+        effect.Play();
         environment1.SetActive(true);
+        info.info.SetActive(false);
+        info.alice.Stop();
+        level2Manager.stop = true;
+        StopAllCoroutines();
         bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
-            info.info.SetActive(false);
-            apply.gameObject.SetActive(false);
-            TimerStart();
+            //apply.gameObject.SetActive(false);
+            if (info.infoId == 1)
+            {
+                StartCoroutine(level2Manager.Dropping());
+            }
+            else if (info.infoId == 2)
+            {
+                level2Manager.move = true;
+                for (int i = 0; i < level2Manager.selections.Count; i++)
+                {
+                    level2Manager.selections[i].SetActive(true);
+                }
+                bg.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            }
+            else if (info.infoId == 3)
+            {
+                for (int i = 0; i < level2Manager.selections.Count; i++)
+                {
+                    level2Manager.selections[i].SetActive(false);
+                }
+                info.info.SetActive(false);
+                //level2Manager.bagInside.gameObject.SetActive(true);
+                bg.gameObject.SetActive(false);
+            }
+            //TimerStart();
         });
     }
     //void SoundChanged(Slider slider, AudioSource source, string key)
@@ -172,27 +199,31 @@ public class Level2UIManager : MonoBehaviour
     }
     void Answer(bool result)
     {
+        environment1.SetActive(true);
+        a.gameObject.SetActive(false);
+        b.gameObject.SetActive(false);
         if (result)
         {
-            bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
-            {
-                CompetitionOpen();
-            });
+            bg.GetComponent<Image>().color = new Color(0, 0, 0, .5f);
+            CompetitionOpen();
+            //bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
+            //{
+            //    CompetitionOpen();
+            //});
         }
         else
         {
             bg.alpha = 0;
             info.info.SetActive(false);
-            GameoverOpen("Yanlýþ cevap verdiniz.");
+            GameoverOpen();
         }
-        a.gameObject.SetActive(false);
-        b.gameObject.SetActive(false);
     }
     public void NextLevel()
     {
         bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
-            timeFinishBtn.gameObject.SetActive(false);
+            //timeFinishBtn.gameObject.SetActive(false);
+            apply.gameObject.SetActive(false);
             info.InfoShowing();
             a.gameObject.SetActive(true);
             b.gameObject.SetActive(true);
@@ -207,15 +238,14 @@ public class Level2UIManager : MonoBehaviour
     {
         bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
-            level2Manager.player.gameObject.SetActive(false);
-            environment1.SetActive(false);
+            //level2Manager.player.gameObject.SetActive(false);
             info.QuestionShowing();
-            bg.DOFade(0, 1).SetEase(Ease.Linear);
+            //bg.DOFade(0, 1).SetEase(Ease.Linear);
         });
     }
-    public void GameoverOpen(string description)
+    public void GameoverOpen()
     {
-        gameOverMenu.GetComponentInChildren<TextMeshProUGUI>().text = description;
+        //gameOverMenu.GetComponentInChildren<TextMeshProUGUI>().text = description;
         gameOverMenu.SetActive(true);
         Time.timeScale = 0;
     }
