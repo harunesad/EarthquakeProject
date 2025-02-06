@@ -13,8 +13,11 @@ public class Info : MonoBehaviour
     [SerializeField] List<string> infos;
     [SerializeField] Sprite injuredBird;
     [SerializeField] Level1Manager level1Manager;
+    [SerializeField] Level2UIManager level2UIManager;
     [SerializeField] List<Competition> competition;
     [SerializeField] List<AudioClip> aliceClips;
+    [SerializeField] AudioSource select;
+    [SerializeField] AudioClip trueSelect, falseSelect;
     public AudioSource alice;
     public GameObject info;
     public int infoId;
@@ -51,11 +54,6 @@ public class Info : MonoBehaviour
             right.onClick.AddListener(TurnRight);
             left.onClick.AddListener(TurnLeft);
             center.onClick.AddListener(ContinueCenter);
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 3)
-        {
-            StartCoroutine(InfoClose());
         }
     }
     public void InfoShowing()
@@ -116,8 +114,11 @@ public class Info : MonoBehaviour
     {
         if (!answer && questionId < competition.Count)
         {
+            level2UIManager.effect.Play();
             if (competition[questionId].correctAnswerId == answerId)
             {
+                select.clip = trueSelect;
+                select.Play();
                 var answerColor = answers[answerId].colors;
                 answerColor.selectedColor = Color.green;
                 answerColor.normalColor = Color.green;
@@ -125,15 +126,20 @@ public class Info : MonoBehaviour
             }
             else if (competition[questionId].correctAnswerId != answerId)
             {
-                var answerColor = answers[answerId].colors;
-                answerColor.selectedColor = Color.red;
-                answerColor.normalColor = Color.red;
-                answers[answerId].colors = answerColor;
+                select.clip = falseSelect;
+                select.Play();
+                //var answerColor = answers[answerId].colors;
+                //answerColor.selectedColor = Color.blue;
+                //answerColor.normalColor = Color.blue;
+                //answers[answerId].colors = answerColor;
 
-                var correctAnswerColor = answers[competition[questionId].correctAnswerId].colors;
-                correctAnswerColor.normalColor = Color.green;
-                correctAnswerColor.selectedColor = Color.green;
-                answers[competition[questionId].correctAnswerId].colors = correctAnswerColor;
+                //var correctAnswerColor = answers[competition[questionId].correctAnswerId].colors;
+                //correctAnswerColor.normalColor = Color.green;
+                //correctAnswerColor.selectedColor = Color.green;
+                //answers[competition[questionId].correctAnswerId].colors = correctAnswerColor;
+                info.SetActive(false);
+                level2UIManager.bg.alpha = 0;
+                level2UIManager.GameoverOpen();
             }
             answer = true;
             StartCoroutine(NextQuestion(answerId));

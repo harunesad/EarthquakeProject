@@ -2,6 +2,7 @@ using DG.Tweening;
 using EZCameraShake;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ public class Level2Manager : MonoBehaviour
     [SerializeField] GameObject ground;
     [SerializeField] AudioSource selectSource, alice;
     [SerializeField] AudioClip trueSelect, falseSelect, safe, notSafe;
+    [SerializeField] string earthquakeInfo, lifeInfo;
     public Transform player;
     public List<GameObject> selections;
     public bool move = false, stop = false;
@@ -38,6 +40,9 @@ public class Level2Manager : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, 100, hideLayer))
             {
+                level2UIManager.moveInfo.GetComponentInChildren<TextMeshProUGUI>().text = lifeInfo;
+                level2UIManager.moveInfo.SetActive(true);
+                hit.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                 if (selectSource.isPlaying)
                 {
                     selectSource.Stop();
@@ -69,6 +74,7 @@ public class Level2Manager : MonoBehaviour
             }
             else if (Physics.Raycast(ray, out hit, 100, trapLayer))
             {
+                hit.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                 if (selectSource.isPlaying)
                 {
                     selectSource.Stop();
@@ -170,10 +176,14 @@ public class Level2Manager : MonoBehaviour
         level2UIManager.bg.GetComponent<Image>().color = new Color(0, 0, 0, .5f);
         level2UIManager.bg.DOFade(1, 1).OnComplete(() =>
         {
+            level2UIManager.moveInfo.GetComponentInChildren<TextMeshProUGUI>().text = earthquakeInfo;
+            level2UIManager.moveInfo.SetActive(true);
             level2UIManager.info.InfoShowing();
         });
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(8);
+        level2UIManager.moveInfo.SetActive(false);
         level2UIManager.info.info.SetActive(false);
+        level2UIManager.moveInfo.SetActive(false);
         level2UIManager.bg.DOFade(0, 1).OnComplete(() =>
         {
             move = true;

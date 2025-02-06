@@ -596,8 +596,8 @@ Transform:
   m_GameObject: {fileID: 207544967}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.0071, y: -0.0042, z: 0.0074}
-  m_LocalScale: {x: 0.0005, y: 0.0005, z: 1}
+  m_LocalPosition: {x: -0.0071, y: 0.002, z: 0.0136}
+  m_LocalScale: {x: 0.0012, y: 0.0012, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 773462981}
@@ -1229,6 +1229,82 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 329548292}
+  m_CullTransparentMesh: 1
+--- !u!1 &336859833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 336859834}
+  - component: {fileID: 336859836}
+  - component: {fileID: 336859835}
+  m_Layer: 5
+  m_Name: MoveInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &336859834
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336859833}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 743654382}
+  m_Father: {fileID: 2145418013}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 500}
+  m_SizeDelta: {x: 1200, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &336859835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336859833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: f0da7f817b1bc7a42a67c3b1fff24121, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &336859836
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336859833}
   m_CullTransparentMesh: 1
 --- !u!1 &339850728
 GameObject:
@@ -1914,6 +1990,19 @@ MonoBehaviour:
   trueSelect: {fileID: 8300000, guid: 4bed5b09a3ad6ce4583d6d4d46e7185f, type: 3}
   falseSelect: {fileID: 8300000, guid: aa15507cd42aeda4b8d6dee770e21053, type: 3}
   finish: {fileID: 0}
+  earthquakeInfo: "Deprem ve Acil Durum \xC7antas\u0131, deprem gibi beklenmedik
+    durumlarda, acil yard\u0131m ekipleri bize ulasana kadar hayati ihtiya\xE7lar\u0131m\u0131z\u0131
+    ve \xF6nemli evraklar\u0131m\u0131z\u0131 saklayabilecegimiz bir \xE7antad\u0131r.
+    Bu \xE7anta, afet sonras\u0131 ilk 72 saatte bizim ve sevdiklerimizin hayat\u0131n\u0131
+    kolaylast\u0131rmak i\xE7in kritik \xF6neme sahiptir."
+  bagInfo: "\u2003Deprem \xE7antas\u0131 i\xE7inde olmas\u0131 gerekenler: Su, bisk\xFCvi,
+    \xE7ikolata, \xE7abuk \xE7orba, konserve yiyecek, kuru yemis gibi \xE7abuk bozulmayan
+    g\u0131dalar, metal d\xFCd\xFCk (d\xFCd\xFCk hijyen a\xE7\u0131s\u0131ndan posette
+    saklanmal\u0131), fener, yedek pil, stre\xE7 film, elektronik ve diger laz\u0131m
+    olabilecek esyalar (k\u0131yafet, radyo, powerbank), ilk yard\u0131m malzemeleri
+    ve toz maskesi (Yara band\u0131,sarg\u0131 bezi vb.), hijyen malzemeleri, isvi\xE7re
+    \xE7ak\u0131s\u0131, kimlik, pasaport, banka c\xFCzdan fotokopisi, araban\u0131n
+    yedek anahtar\u0131, ila\xE7 kullananlar i\xE7in yedekler"
   bagInside: {fileID: 248710783}
   selections:
   - {fileID: 1581228124}
@@ -2160,7 +2249,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.04, y: 0.1098, z: 0}
-  m_LocalScale: {x: 0.0025, y: 0.0025, z: 1}
+  m_LocalScale: {x: 0.004, y: 0.004, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 577197610}
@@ -2270,6 +2359,8 @@ MonoBehaviour:
   cursor: {fileID: 1904824126}
   environment1: {fileID: 4774331402545660711}
   environment2: {fileID: 1050542178}
+  earthquakeInfo: {fileID: 1379699054}
+  "move\u0131nfo": {fileID: 336859833}
   bg: {fileID: 2044122358}
   info: {fileID: 1933438515}
   timeText: {fileID: 1817974718}
@@ -2315,7 +2406,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 562088714}
@@ -2361,7 +2452,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 34cbb61f7cd90d04cbf9f4355fa14be7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f912bf6ba95a7941a1361cb8acf0305, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2839,6 +2930,81 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &743654381
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 743654382}
+  - component: {fileID: 743654384}
+  - component: {fileID: 743654383}
+  m_Layer: 5
+  m_Name: MoveImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &743654382
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743654381}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 336859834}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 700, y: 300}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &743654383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743654381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 177fad6847c1d1e42b020eabb63e0422, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &743654384
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743654381}
+  m_CullTransparentMesh: 1
 --- !u!1 &747081899
 GameObject:
   m_ObjectHideFlags: 0
@@ -3071,7 +3237,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 207544968}
@@ -3117,7 +3283,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 34cbb61f7cd90d04cbf9f4355fa14be7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f912bf6ba95a7941a1361cb8acf0305, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4243,7 +4409,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1368133883}
@@ -4289,7 +4455,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 34cbb61f7cd90d04cbf9f4355fa14be7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f912bf6ba95a7941a1361cb8acf0305, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4411,7 +4577,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1581228125}
@@ -4457,7 +4623,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 34cbb61f7cd90d04cbf9f4355fa14be7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f912bf6ba95a7941a1361cb8acf0305, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6066,7 +6232,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1903410690}
@@ -6112,7 +6278,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 34cbb61f7cd90d04cbf9f4355fa14be7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f912bf6ba95a7941a1361cb8acf0305, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6275,7 +6441,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.0019, y: -0.0205, z: -0.033}
-  m_LocalScale: {x: 0.00015, y: 0.002, z: 1}
+  m_LocalScale: {x: 0.0003, y: 0.004, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1083239488}
@@ -6417,6 +6583,82 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1379699054
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1379699055}
+  - component: {fileID: 1379699057}
+  - component: {fileID: 1379699056}
+  m_Layer: 5
+  m_Name: EarthquakeInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1379699055
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379699054}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1828585621}
+  m_Father: {fileID: 2145418013}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 500}
+  m_SizeDelta: {x: 1200, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1379699056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379699054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: f0da7f817b1bc7a42a67c3b1fff24121, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1379699057
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379699054}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1410058691
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7212,7 +7454,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.058, y: -0.0342, z: 0.0074}
-  m_LocalScale: {x: 0.0005, y: 0.0005, z: 1}
+  m_LocalScale: {x: 0.001, y: 0.001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1112943040}
@@ -8261,6 +8503,140 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1817974716}
   m_CullTransparentMesh: 1
+--- !u!1 &1828585620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1828585621}
+  - component: {fileID: 1828585623}
+  - component: {fileID: 1828585622}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1828585621
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828585620}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1379699055}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1000, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1828585622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828585620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190335
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1828585623
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828585620}
+  m_CullTransparentMesh: 1
 --- !u!1 &1855342873
 GameObject:
   m_ObjectHideFlags: 0
@@ -8765,8 +9141,8 @@ Transform:
   m_GameObject: {fileID: 1903410689}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.0112, y: -0.0149, z: 0.0119}
-  m_LocalScale: {x: 0.00075, y: 0.00075, z: 1}
+  m_LocalPosition: {x: -0.0542, y: 0.0085, z: 0.0119}
+  m_LocalScale: {x: 0.00125, y: 0.00125, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1329833804}
@@ -9151,32 +9527,38 @@ MonoBehaviour:
   turn: {fileID: 0}
   player: {fileID: 0}
   infos:
-  - "Benim ad\u0131m Alice. Nas\u0131l yapar\u0131m bunu, aray\u0131p bulmal\u0131y\u0131m
-    \xE7\u0131k\u0131\u015F yolunu. Oradan m\u0131 buradan m\u0131, bir \u015Fekilde
-    bulurum \xE7\u0131k\u0131\u015F yolunu. \u0130nand\u0131m kendime ve denedim.
-    S\xFCrekli \xE7abalad\u0131m, i\u015Fte buldum. Buradan, a\u015Fa\u011F\u0131dan,
-    yukar\u0131dan, sa\u011Fdan ve soldan. Denedim ve sonunda buldum \xE7\u0131k\u0131\u015F
-    yolunu. \xC7\xFCnk\xFC benim ad\u0131m Alice."
+  - "Merhaba! Hos geldin! Birlikte eglenmeye ve \xF6grenmeye haz\u0131r m\u0131s\u0131n? 
+    Benim ad\u0131m Alice! Nas\u0131l yapar\u0131m bunu? Aray\u0131p bulmal\u0131y\u0131m,
+    \xE7\u0131k\u0131s yolunu! \u0130nand\u0131m kendime ve denedim. S\xFCrekli \xE7abalad\u0131m!
+    Sonunda, buldum \xE7\u0131k\u0131s yolunu! \xC7\xFCnk\xFC benim ad\u0131m Alice! 
+    Hadi! Baslayal\u0131m."
   - "Deprem \xE7antan\u0131 yan\u0131nda ald\u0131\u011F\u0131ndan emin misin?"
   - "Tebrikler! Ba\u015Fard\u0131k! Deprem \xE7antam\u0131z\u0131n hangisi oldu\u011Funu
     ve \xF6nemini \xF6\u011Frendik!"
-  - "Deprem oluyor! Hemen g\xFCvenli bir alana ge\xE7meliyiz!"
-  - "B\xFCy\xFCk bir deprem felaketi atlatt\u0131k! Depreme haz\u0131rl\u0131kl\u0131
-    olmak \xE7ok \xF6nemli! Deprem \xE7antas\u0131n\u0131n i\xE7inde olmas\u0131
-    gereken baz\u0131 \xF6nemli e\u015Fya ve malzemeleri birlikte se\xE7elim! Haz\u0131r
-    m\u0131s\u0131n?"
-  - "Ba\u015Fard\u0131k, tebrikler! Depreme kar\u015F\u0131 art\u0131k daha da haz\u0131rl\u0131kl\u0131y\u0131z!
+  - "Deprem oluyor! G\xFCvenli bir alana ge\xE7! Deprem oldugunda hemen yere \xE7\xF6k,
+    bas\u0131n\u0131 ve boynunu koruyacak sekilde kapan, ve g\xFCvenli bir yere s\u0131k\u0131ca
+    tutun! Senin i\xE7in yukar\u0131da \xE7\xF6k-kapan-tutun hareketini nas\u0131l
+    yapabilecegini g\xF6sterdim! Hadi!"
+  - "Depremi hasars\u0131z atlatt\u0131k. Depreme haz\u0131rl\u0131kl\u0131 olmak
+    \xE7ok \xF6nemli! Deprem \xE7antas\u0131n\u0131n i\xE7inde olmas\u0131 gereken
+    baz\u0131 \xF6nemli esya ve malzemeleri birlikte se\xE7elim. Dogru malzemeleri
+    se\xE7tigimizden emin olmal\u0131y\u0131z. Haz\u0131r m\u0131s\u0131n?"
+  - "Basard\u0131k, tebrikler! Depreme kars\u0131 art\u0131k daha da haz\u0131rl\u0131kl\u0131y\u0131z!
     Hadi, gel! Okula gitme zaman\u0131!"
   injuredBird: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   level1Manager: {fileID: 485272175}
+  level2UIManager: {fileID: 0}
   competition: []
   aliceClips:
-  - {fileID: 8300000, guid: c6c5a3abf0308594bb7a192b313f4011, type: 3}
+  - {fileID: 8300000, guid: bfcee3071f296ed48a011b63014f3e21, type: 3}
   - {fileID: 0}
-  - {fileID: 8300000, guid: aebd02a7855be7f4e83fa980d72b6894, type: 3}
-  - {fileID: 8300000, guid: a889938a0e062e845952f4c6d5caef03, type: 3}
-  - {fileID: 8300000, guid: 63c6453484ed9df488239c5ab9b90327, type: 3}
-  - {fileID: 8300000, guid: 83f0b27beba67c64087eb0511f5ce264, type: 3}
+  - {fileID: 8300000, guid: a535d10fa22f110478b387b19362b504, type: 3}
+  - {fileID: 8300000, guid: 4bf2b95af5af57948a254aaca6883616, type: 3}
+  - {fileID: 8300000, guid: ee70bc8c22eae3e439e23d03ec352726, type: 3}
+  - {fileID: 8300000, guid: 4028401523049cb45a5ab055d0ea4267, type: 3}
+  select: {fileID: 0}
+  trueSelect: {fileID: 0}
+  falseSelect: {fileID: 0}
   alice: {fileID: 1612379885}
   info: {fileID: 2145418012}
   infoId: 0
@@ -10184,6 +10566,8 @@ RectTransform:
   m_Children:
   - {fileID: 709935821}
   - {fileID: 1191532876}
+  - {fileID: 1379699055}
+  - {fileID: 336859834}
   m_Father: {fileID: 1029219075}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

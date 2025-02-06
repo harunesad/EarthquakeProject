@@ -16,7 +16,7 @@ public class Level1UIManager : MonoBehaviour
     [SerializeField] Level1Manager level1Manager;
     [SerializeField] Vector3 camRot;
     [SerializeField] Image cursor;
-    public GameObject environment1, environment2;
+    public GameObject environment1, environment2, earthquakeInfo, moveýnfo;
     public CanvasGroup bg;
     public Info info;
     public TextMeshProUGUI timeText;
@@ -138,6 +138,8 @@ public class Level1UIManager : MonoBehaviour
         StopAllCoroutines();
         bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
+            earthquakeInfo.SetActive(false);
+            moveýnfo.SetActive(false);
             //apply.gameObject.SetActive(false);
             if (info.infoId == 1)
             {
@@ -150,6 +152,7 @@ public class Level1UIManager : MonoBehaviour
             }
             else if (info.infoId == 3)
             {
+                moveýnfo.SetActive(true);
                 StartCoroutine(level1Manager.Dropping());
                 StartCoroutine(BagMissing());
             }
@@ -187,7 +190,7 @@ public class Level1UIManager : MonoBehaviour
         {
             info.InfoShowing();
         });
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(16);
         info.info.SetActive(false);
         bg.DOFade(0, 1).OnComplete(() =>
         {

@@ -66,9 +66,18 @@ public class Crash : MonoBehaviour
                 alice.clip = gameFinish;
             }
             alice.Play();
-            restart.gameObject.SetActive(true);
-            Time.timeScale = 0;
-            info.InfoChange("Harika Alis! Güvenli bölgedesin! Deprem sýrasýnda sakin kalýp, doðru kararlar alarak güvenli bir yere ulaþtýk.");
+            FindAnyObjectByType<Level3Manager>().enabled = false;
+            FindAnyObjectByType<Level3UIManager>().enabled = false;
+            level3UIManager.bg.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+            level3UIManager.bg.alpha = 1;
+            level3UIManager.bg.GetComponent<Image>().DOColor(new Color(0, 0, 0, .5f), 1).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                //Time.timeScale = 0;
+                restart.gameObject.SetActive(true);
+                level3UIManager.apply.gameObject.SetActive(false);
+                info.InfoShowing();
+            });
+            //info.InfoChange("Harika Alis! Güvenli bölgedesin! Deprem sýrasýnda sakin kalýp, doðru kararlar alarak güvenli bir yere ulaþtýk.");
         }
         else if (other.gameObject.layer == 16)
         {

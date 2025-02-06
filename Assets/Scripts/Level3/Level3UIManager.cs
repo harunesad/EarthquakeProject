@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,17 +10,22 @@ using UnityEngine.UI;
 public class Level3UIManager : MonoBehaviour
 {
     [SerializeField] Button resumeMenuBtn, resumeBtn, resumeCloseBtn, resumeRestartBtn, gameoverRestartBtn, resumeExitBtn, gameoverExitBtn
-        , soundOn, soundOff, apply;
+        , soundOn, soundOff;
+    [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] GameObject resumeMenu, gameOverMenu;
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, effect;
-    [SerializeField] CanvasGroup bg;
     [SerializeField] Level3Manager level3Manager;
     [SerializeField] Vector3 camRot;
     [SerializeField] Image cursor;
+    public CanvasGroup bg;
+    public Button apply;
     public Info info;
+    float time = 180;
+    bool timer = false;
     void Start()
     {
+        timeText.text = time.ToString();
         //if (PlayerPrefs.HasKey("Music"))
         //{
         //    musicSlider.value = PlayerPrefs.GetFloat("Music");
@@ -56,6 +62,16 @@ public class Level3UIManager : MonoBehaviour
     void Update()
     {
         cursor.rectTransform.position = Input.mousePosition;
+        if (timer)
+        {
+            time -= Time.deltaTime;
+            timeText.text = ((int)time).ToString();
+        }
+        if (time <= 0)
+        {
+            timer = false;
+            GameoverOpen();
+        }
     }
     void ResumeMenuOpen()
     {
@@ -95,20 +111,39 @@ public class Level3UIManager : MonoBehaviour
     void Apply()
     {
         effect.Play();
-        info.info.SetActive(false);
+        //info.info.SetActive(false);
         info.alice.Stop();
         StopAllCoroutines();
+        if (info.infoId == 1)
+        {
+            bg.GetComponent<Image>().DOColor(new Color(0, 0, 0, .5f), 1).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                info.InfoShowing();
+                StartCoroutine(NextInfo());
+            });
+        }
+        else if (info.infoId == 2)
+        {
+            info.info.SetActive(false);
+            bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                bg.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                level3Manager.enabled = true;
+                timer = true;
+            });
+        }
+    }
+    IEnumerator NextInfo()
+    {
+        yield return new WaitForSeconds(3);
+        info.info.SetActive(false);
         bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
-            //apply.gameObject.SetActive(false);
-            if (info.infoId == 1)
-            {
-                level3Manager.enabled = true;
-            }
-            //TimerStart();
+            bg.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            level3Manager.enabled = true;
+            timer = true;
         });
     }
-
     //void SoundChanged(Slider slider, AudioSource source, string key)
     //{
     //    PlayerPrefs.SetFloat(key, slider.value);
