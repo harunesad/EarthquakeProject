@@ -12,7 +12,7 @@ public class Level3UIManager : MonoBehaviour
     [SerializeField] Button resumeMenuBtn, resumeBtn, resumeCloseBtn, resumeRestartBtn, gameoverRestartBtn, resumeExitBtn, gameoverExitBtn
         , soundOn, soundOff;
     [SerializeField] TextMeshProUGUI timeText;
-    [SerializeField] GameObject resumeMenu, gameOverMenu;
+    [SerializeField] GameObject resumeMenu, gameOverMenu, earthquakeInfo;
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, effect;
     [SerializeField] Level3Manager level3Manager;
@@ -110,14 +110,16 @@ public class Level3UIManager : MonoBehaviour
     }
     void Apply()
     {
+        earthquakeInfo.SetActive(false);
         effect.Play();
-        //info.info.SetActive(false);
+        info.info.SetActive(false);
         info.alice.Stop();
         StopAllCoroutines();
         if (info.infoId == 1)
         {
             bg.GetComponent<Image>().DOColor(new Color(0, 0, 0, .5f), 1).SetEase(Ease.Linear).OnComplete(() =>
             {
+                earthquakeInfo.SetActive(true);
                 info.InfoShowing();
                 StartCoroutine(NextInfo());
             });
@@ -132,11 +134,16 @@ public class Level3UIManager : MonoBehaviour
                 timer = true;
             });
         }
+        else if (info.infoId == 3)
+        {
+            SceneManager.LoadScene(0);
+        }
     }
     IEnumerator NextInfo()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(info.alice.clip.length);
         info.info.SetActive(false);
+        earthquakeInfo.SetActive(false);
         bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
             bg.GetComponent<Image>().color = new Color(1, 1, 1, 1);
