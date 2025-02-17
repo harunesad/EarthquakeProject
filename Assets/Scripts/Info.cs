@@ -18,6 +18,7 @@ public class Info : MonoBehaviour
     [SerializeField] List<AudioClip> aliceClips;
     [SerializeField] AudioSource select;
     [SerializeField] AudioClip trueSelect, falseSelect;
+    [SerializeField] SpriteRenderer objectImage, objectResult;
     public AudioSource alice;
     public GameObject info;
     public int infoId;
@@ -34,6 +35,8 @@ public class Info : MonoBehaviour
         if (objectInfo)
         {
             objectInfoText = objectInfo.GetComponentInChildren<TextMesh>();
+            objectResult = objectInfo.transform.GetChild(0).GetComponent<SpriteRenderer>();
+            objectImage = objectInfo.transform.GetChild(1).GetComponent<SpriteRenderer>();
             //collectBtn = objectInfo.GetComponentInChildren<Button>();
             //collectBtn.onClick.AddListener(Collect);
         }
@@ -88,10 +91,13 @@ public class Info : MonoBehaviour
         yield return new WaitForSeconds(3);
         info.SetActive(false);
     }
-    public void ObjectInfoChange(string message)
+    public void ObjectInfoChange(Sprite result, Sprite mySprite, Vector3 scale)
     {
         objectInfo.SetActive(true);
-        objectInfoText.text = message;
+        objectResult.sprite = result;
+        objectImage.transform.localScale = scale;
+        objectImage.sprite = mySprite;
+        //objectInfoText.text = message;
     }
     void Collect()
     {

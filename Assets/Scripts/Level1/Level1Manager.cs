@@ -17,6 +17,7 @@ public class Level1Manager : MonoBehaviour
     [SerializeField] AudioSource selectSource;
     [SerializeField] AudioClip trueSelect, falseSelect, finish;
     [SerializeField] string earthquakeInfo, bagInfo;
+    [SerializeField] Sprite apply, close;
     public AudioSource alice;
     public GameObject bagInside;
     public List<GameObject> selections;
@@ -134,7 +135,7 @@ public class Level1Manager : MonoBehaviour
                 //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.position);
                 //move = true;
-                level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
+                level1UIManager.info.ObjectInfoChange(apply, hit.transform.GetComponent<ObjectProp>().mySprite, hit.transform.GetComponent<ObjectProp>().myScale);
                 collectObj = hit.transform;
                 collectObj.gameObject.SetActive(false);
                 trueObj = true;
@@ -158,7 +159,7 @@ public class Level1Manager : MonoBehaviour
                 //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.position);
                 //move = true;
-                level1UIManager.info.ObjectInfoChange(hit.transform.name + "\n" + hit.transform.GetComponent<ObjectProp>().prop);
+                level1UIManager.info.ObjectInfoChange(close, hit.transform.GetComponent<ObjectProp>().mySprite, hit.transform.GetComponent<ObjectProp>().myScale);
                 collectObj = hit.transform;
                 collectObj.gameObject.SetActive(false);
                 trueObj = false;

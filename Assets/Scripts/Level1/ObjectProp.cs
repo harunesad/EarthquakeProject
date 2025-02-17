@@ -5,6 +5,8 @@ using UnityEngine;
 public class ObjectProp : MonoBehaviour
 {
     public string prop;
+    public Sprite mySprite;
+    public Vector3 myScale;
     void Start()
     {
         
