@@ -14,9 +14,10 @@ public class Level1Manager : MonoBehaviour
     [SerializeField] LayerMask hideLayer, bagLayer, collectLayer, notCollectLayer;
     [SerializeField] List<GameObject> dropObj;
     [SerializeField] List<Vector3> pos;
-    [SerializeField] AudioSource selectSource, alice;
+    [SerializeField] AudioSource selectSource;
     [SerializeField] AudioClip trueSelect, falseSelect, finish;
     [SerializeField] string earthquakeInfo, bagInfo;
+    public AudioSource alice;
     public GameObject bagInside;
     public List<GameObject> selections;
     public Transform player;
@@ -43,13 +44,16 @@ public class Level1Manager : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, 100, hideLayer) && bagCollect && !move)
             {
+                for (int i = 0; i < selections.Count; i++)
+                {
+                    selections[i].transform.GetChild(0).gameObject.SetActive(false);
+                }
                 level1UIManager.moveýnfo.SetActive(false);
                 level1UIManager.earthquakeInfo.SetActive(false);
                 hit.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                 //player.position = hit.transform.GetComponent<HideProp>().pos;
                 //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
-                move = true;
                 if (hit.transform.name == "table" || hit.transform.name == "carpet" || hit.transform.name == "door")
                 {
                     if (selectSource.isPlaying)
@@ -63,10 +67,11 @@ public class Level1Manager : MonoBehaviour
                         selectSource.clip = falseSelect;
                         selectSource.Play();
                     }
-                    level1UIManager.GameoverOpen();
+                    ////level1UIManager.GameoverOpen();
                 }
                 else
                 {
+                    move = true;
                     if (selectSource.isPlaying)
                     {
                         selectSource.Stop();
@@ -78,6 +83,7 @@ public class Level1Manager : MonoBehaviour
                         selectSource.clip = trueSelect;
                         selectSource.Play();
                     }
+                    //level1UIManager.apply.gameObject.SetActive(false);
                     level1UIManager.bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
                     {
                         level1UIManager.earthquakeInfo.GetComponentInChildren<TextMeshProUGUI>().text = bagInfo;
@@ -90,6 +96,7 @@ public class Level1Manager : MonoBehaviour
             }
             else if (Physics.Raycast(ray, out hit, 100, bagLayer) && !level1UIManager.info.info.activeSelf && !move)
             {
+                //level1UIManager.apply.gameObject.SetActive(false);
                 hit.transform.gameObject.layer = 0;
                 hit.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                 if (selectSource.isPlaying)
@@ -178,6 +185,7 @@ public class Level1Manager : MonoBehaviour
         }
         if (collectCount == 0)
         {
+            //level1UIManager.apply.gameObject.SetActive(false);
             level1UIManager.bg.alpha = 0;
             level1UIManager.bg.gameObject.SetActive(true);
             level1UIManager.bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
@@ -199,20 +207,28 @@ public class Level1Manager : MonoBehaviour
             level1UIManager.earthquakeInfo.SetActive(true);
             level1UIManager.info.InfoShowing();
         });
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(alice.clip.length - 1);
+        level1UIManager.apply.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
         level1UIManager.info.info.SetActive(false);
         level1UIManager.bg.DOFade(0, 1).OnComplete(() =>
         {
             StartCoroutine(Dropping());
         });
         yield return new WaitForSeconds(2);
+        level1UIManager.earthquakeInfo.SetActive(false);
+        //level1UIManager.apply.gameObject.SetActive(false);
         level1UIManager.bg.GetComponent<Image>().color = new Color(0, 0, 0, .5f);
         level1UIManager.bg.DOFade(1, 1).OnComplete(() =>
         {
             level1UIManager.moveýnfo.SetActive(true);
             level1UIManager.info.InfoShowing();
         });
-        yield return new WaitForSeconds(16);
+        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(alice.clip.length);
+        level1UIManager.apply.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
         level1UIManager.info.info.SetActive(false);
         level1UIManager.bg.DOFade(0, 1).OnComplete(() =>
         {
@@ -227,7 +243,9 @@ public class Level1Manager : MonoBehaviour
     IEnumerator BagInside()
     {
         Camera.main.GetComponent<CameraShaker>().enabled = false;
-        yield return new WaitForSeconds(14);
+        yield return new WaitForSeconds(alice.clip.length);
+        level1UIManager.apply.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
         for (int i = 0; i < selections.Count; i++)
         {
             selections[i].SetActive(false);
@@ -245,7 +263,9 @@ public class Level1Manager : MonoBehaviour
         //    alice.Play();
         //}
         //level1UIManager.info.InfoChange("Tebrikler");
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(alice.clip.length);
+        level1UIManager.apply.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     public IEnumerator Dropping() 

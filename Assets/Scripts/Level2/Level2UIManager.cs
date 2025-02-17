@@ -1,4 +1,5 @@
 using DG.Tweening;
+using EZCameraShake;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 public class Level2UIManager : MonoBehaviour
 {
     [SerializeField] Button resumeMenuBtn, resumeBtn, resumeCloseBtn, resumeRestartBtn, gameoverRestartBtn, resumeExitBtn, gameoverExitBtn,
-        timeFinishBtn, soundOn, soundOff, apply, a, b;
+        timeFinishBtn, soundOn, soundOff, a, b;
     [SerializeField] GameObject resumeMenu, gameOverMenu;
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, select;
@@ -18,6 +19,7 @@ public class Level2UIManager : MonoBehaviour
     [SerializeField] GameObject environment1, environment2;
     [SerializeField] Image cursor;
     [SerializeField] List<Answers> answers;
+    public Button apply;
     public AudioSource effect;
     public GameObject moveInfo;
     public CanvasGroup bg;
@@ -67,7 +69,11 @@ public class Level2UIManager : MonoBehaviour
         //effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
 
         //TimerStart();
-
+        Invoke("ApplyActive", 11);
+    }
+    void ApplyActive()
+    {
+        apply.gameObject.SetActive(true);
     }
     void Update()
     {
@@ -139,7 +145,7 @@ public class Level2UIManager : MonoBehaviour
         StopAllCoroutines();
         if (info.infoId == 3)
         {
-            Debug.Log("aaa");
+            //Camera.main.GetComponent<CameraShaker>().enabled = false;
             for (int i = 0; i < level2Manager.selections.Count; i++)
             {
                 level2Manager.selections[i].SetActive(false);
@@ -234,16 +240,26 @@ public class Level2UIManager : MonoBehaviour
         if (answers[answerId].correctAnswerId == 0)
         {
             var answerColor = a.colors;
-            answerColor.selectedColor = Color.green;
-            answerColor.normalColor = Color.green;
+            answerColor.selectedColor = new Color(0.5136614f, 0.9150943f, 0.5327677f, 1);
+            answerColor.normalColor = new Color(0.5136614f, 0.9150943f, 0.5327677f, 1);
             a.colors = answerColor;
+
+            var falseColor = b.colors;
+            falseColor.selectedColor = new Color(1, .5f, .5f, 1);
+            falseColor.normalColor = new Color(1, .5f, .5f, 1);
+            b.colors = falseColor;
         }
         else
         {
             var answerColor = b.colors;
-            answerColor.selectedColor = Color.green;
-            answerColor.normalColor = Color.green;
+            answerColor.selectedColor = new Color(0.5136614f, 0.9150943f, 0.5327677f, 1);
+            answerColor.normalColor = new Color(0.5136614f, 0.9150943f, 0.5327677f, 1);
             b.colors = answerColor;
+
+            var falseColor = a.colors;
+            falseColor.selectedColor = new Color(1, .5f, .5f, 1);
+            falseColor.normalColor = new Color(1, .5f, .5f, 1);
+            a.colors = falseColor;
         }
         //environment1.SetActive(true);
         if (result)
@@ -266,10 +282,12 @@ public class Level2UIManager : MonoBehaviour
                 bg.GetComponent<Image>().DOColor(new Color(1, 1, 1, 1), 1).SetEase(Ease.Linear).OnComplete(() =>
                 {
                     info.InfoShowing();
+                    apply.gameObject.SetActive(true);
+                    //StartCoroutine(ApplyOpen());
                     info.info.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -250, 0);
                     a.gameObject.SetActive(false);
                     b.gameObject.SetActive(false);
-                    apply.gameObject.SetActive(true);
+                    //apply.gameObject.SetActive(true);
                 });
                 //CompetitionOpen();
             }
@@ -278,9 +296,11 @@ public class Level2UIManager : MonoBehaviour
         {
             select.clip = falseSelect;
             select.Play();
-            bg.alpha = 0;
-            info.info.SetActive(false);
-            GameoverOpen();
+            //bg.alpha = 0;
+            //info.infoId = 2;
+            //info.info.SetActive(false);
+            //NextLevel();
+            //GameoverOpen();
             return;
         }
         click = true;
@@ -289,20 +309,16 @@ public class Level2UIManager : MonoBehaviour
     IEnumerator NextQuestion()
     {
         yield return new WaitForSeconds(2);
-        if (answers[answerId - 1].correctAnswerId == 0)
-        {
-            var answerColor = a.colors;
-            answerColor.selectedColor = Color.white;
-            answerColor.normalColor = Color.white;
-            a.colors = answerColor;
-        }
-        else
-        {
-            var answerColor = b.colors;
-            answerColor.selectedColor = Color.white;
-            answerColor.normalColor = Color.white;
-            b.colors = answerColor;
-        }
+        var answerAColor = a.colors;
+        answerAColor.selectedColor = Color.white;
+        answerAColor.normalColor = Color.white;
+        a.colors = answerAColor;
+
+        var answerBColor = b.colors;
+        answerBColor.selectedColor = Color.white;
+        answerBColor.normalColor = Color.white;
+        b.colors = answerBColor;
+
         if (answerId <= 4)
         {
             info.info.GetComponentInChildren<TextMeshProUGUI>().text = answers[answerId].question;
@@ -313,16 +329,23 @@ public class Level2UIManager : MonoBehaviour
     }
     public void NextLevel()
     {
+        //apply.gameObject.SetActive(false);
         bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
             //timeFinishBtn.gameObject.SetActive(false);
             info.InfoShowing();
+            //StartCoroutine(ApplyOpen());
             //StartCoroutine(info.InfoClose());
             //time = 60;
             //timeText.text = ((int)time).ToString();
             //timeText.gameObject.SetActive(true);
             //timer = true;
         });
+    }
+    IEnumerator ApplyOpen()
+    {
+        yield return new WaitForSeconds(level2Manager.alice.clip.length);
+        apply.gameObject.SetActive(true);
     }
     public void CompetitionOpen()
     {

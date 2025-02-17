@@ -120,29 +120,35 @@ public class Info : MonoBehaviour
                 select.clip = trueSelect;
                 select.Play();
                 var answerColor = answers[answerId].colors;
-                answerColor.selectedColor = Color.green;
-                answerColor.normalColor = Color.green;
+                answerColor.selectedColor = new Color(0.5136614f, 0.9150943f, 0.5327677f, 1);
+                answerColor.normalColor = new Color(0.5136614f, 0.9150943f, 0.5327677f, 1);
                 answers[answerId].colors = answerColor;
+                StartCoroutine(NextQuestion(answerId));
             }
             else if (competition[questionId].correctAnswerId != answerId)
             {
                 select.clip = falseSelect;
                 select.Play();
-                //var answerColor = answers[answerId].colors;
-                //answerColor.selectedColor = Color.blue;
-                //answerColor.normalColor = Color.blue;
-                //answers[answerId].colors = answerColor;
+                var falseColor = answers[answerId].colors;
+                falseColor.selectedColor = new Color(1, .5f, .5f, 1);
+                falseColor.normalColor = new Color(1, .5f, .5f, 1);
+                answers[answerId].colors = falseColor;
+
+                var answerColor = answers[competition[questionId].correctAnswerId].colors;
+                answerColor.selectedColor = new Color(0.5136614f, 0.9150943f, 0.5327677f, 1);
+                answerColor.normalColor = new Color(0.5136614f, 0.9150943f, 0.5327677f, 1);
+                answers[competition[questionId].correctAnswerId].colors = answerColor;
 
                 //var correctAnswerColor = answers[competition[questionId].correctAnswerId].colors;
                 //correctAnswerColor.normalColor = Color.green;
                 //correctAnswerColor.selectedColor = Color.green;
                 //answers[competition[questionId].correctAnswerId].colors = correctAnswerColor;
-                info.SetActive(false);
-                level2UIManager.bg.alpha = 0;
-                level2UIManager.GameoverOpen();
+                //info.SetActive(false);
+                //level2UIManager.bg.alpha = 0;
+                //level2UIManager.GameoverOpen();
+                StartCoroutine(NextQuestion(answerId));
             }
             answer = true;
-            StartCoroutine(NextQuestion(answerId));
         }
     }
     IEnumerator NextQuestion(int answerId)

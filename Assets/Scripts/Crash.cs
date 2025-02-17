@@ -1,4 +1,5 @@
 using DG.Tweening;
+using EZCameraShake;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -70,12 +71,15 @@ public class Crash : MonoBehaviour
             //FindAnyObjectByType<Level3UIManager>().enabled = false;
             level3UIManager.bg.GetComponent<Image>().color = new Color(1, 1, 1, 1);
             //level3UIManager.bg.alpha = 1;
+            //level3UIManager.apply.gameObject.SetActive(false);
             level3UIManager.bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
             {
+                Camera.main.GetComponent<CameraShaker>().enabled = false;
                 //Time.timeScale = 0;
                 //restart.gameObject.SetActive(true);
                 //level3UIManager.apply.gameObject.SetActive(false);
                 info.InfoShowing();
+                //StartCoroutine(ApplyOpen());
             });
             //info.InfoChange("Harika Alis! Güvenli bölgedesin! Deprem sýrasýnda sakin kalýp, doðru kararlar alarak güvenli bir yere ulaþtýk.");
         }
@@ -84,6 +88,11 @@ public class Crash : MonoBehaviour
             Vector3 obstacleRot = other.transform.parent.localEulerAngles;
             other.transform.parent.DOLocalRotate(new Vector3(obstacleRot.x, obstacleRot.y, 90), .5f).SetEase(Ease.Linear);
         }
+    }
+    IEnumerator ApplyOpen()
+    {
+        yield return new WaitForSeconds(alice.clip.length);
+        level3UIManager.apply.gameObject.SetActive(true);
     }
     void Restart()
     {

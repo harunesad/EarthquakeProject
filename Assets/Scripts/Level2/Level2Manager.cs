@@ -14,9 +14,10 @@ public class Level2Manager : MonoBehaviour
     [SerializeField] List<GameObject> dropObj;
     [SerializeField] List<Vector3> pos;
     [SerializeField] GameObject ground;
-    [SerializeField] AudioSource selectSource, alice;
+    [SerializeField] AudioSource selectSource;
     [SerializeField] AudioClip trueSelect, falseSelect, safe, notSafe;
     [SerializeField] string earthquakeInfo, lifeInfo;
+    public AudioSource alice;
     public Transform player;
     public List<GameObject> selections;
     public bool move = false, stop = false;
@@ -58,22 +59,26 @@ public class Level2Manager : MonoBehaviour
                 //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
                 move = false;
-                if (alice.isPlaying && safe)
-                {
-                    alice.Stop();
-                    alice.clip = safe;
-                    alice.Play();
-                }
-                else if (!alice.isPlaying && safe)
-                {
-                    alice.clip = safe;
-                    alice.Play();
-                }
+                //if (alice.isPlaying && safe)
+                //{
+                //    alice.Stop();
+                //    alice.clip = safe;
+                //    alice.Play();
+                //}
+                //else if (!alice.isPlaying && safe)
+                //{
+                //    alice.clip = safe;
+                //    alice.Play();
+                //}
                 level2UIManager.NextLevel();
                 //level2UIManager.info.InfoChange("Alice, yaþam üçgenini doðru uyguladýn!");
             }
             else if (Physics.Raycast(ray, out hit, 100, trapLayer))
             {
+                for (int i = 0; i < selections.Count; i++)
+                {
+                    selections[i].transform.GetChild(0).gameObject.SetActive(false);
+                }
                 hit.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                 if (selectSource.isPlaying)
                 {
@@ -89,19 +94,19 @@ public class Level2Manager : MonoBehaviour
                 //player.position = hit.transform.GetComponent<HideProp>().pos;
                 //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
-                move = false;
-                if (alice.isPlaying && notSafe)
-                {
-                    alice.Stop();
-                    alice.clip = notSafe;
-                    alice.Play();
-                }
-                else if (!alice.isPlaying && notSafe)
-                {
-                    alice.clip = notSafe;
-                    alice.Play();
-                }
-                level2UIManager.GameoverOpen();
+                //move = false;
+                //if (alice.isPlaying && notSafe)
+                //{
+                //    alice.Stop();
+                //    alice.clip = notSafe;
+                //    alice.Play();
+                //}
+                //else if (!alice.isPlaying && notSafe)
+                //{
+                //    alice.clip = notSafe;
+                //    alice.Play();
+                //}
+                ////level2UIManager.GameoverOpen();
                 //level2UIManager.info.InfoChange("Alis, burasý güvenli deðil! Sýranýn yanýna geç ve baþýný koru!");
             }
             else if (Physics.Raycast(ray, out hit, 100, bagLayer))
@@ -172,7 +177,10 @@ public class Level2Manager : MonoBehaviour
 
         Camera.main.GetComponent<CameraShaker>().enabled = true;
         CameraShaker.Instance.StartShake(.5f, 4, .1f);
+        //level2UIManager.apply.gameObject.SetActive(false);
         yield return new WaitForSeconds(2);
+        Camera.main.GetComponent<CameraShaker>().enabled = false;
+        yield return new WaitForSeconds(1);
         level2UIManager.bg.GetComponent<Image>().color = new Color(0, 0, 0, .5f);
         level2UIManager.bg.DOFade(1, 1).OnComplete(() =>
         {
@@ -180,8 +188,10 @@ public class Level2Manager : MonoBehaviour
             level2UIManager.moveInfo.SetActive(true);
             level2UIManager.info.InfoShowing();
         });
-        yield return new WaitForSeconds(8);
-        level2UIManager.moveInfo.SetActive(false);
+        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(alice.clip.length);
+        level2UIManager.apply.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
         level2UIManager.info.info.SetActive(false);
         level2UIManager.moveInfo.SetActive(false);
         level2UIManager.bg.DOFade(0, 1).OnComplete(() =>

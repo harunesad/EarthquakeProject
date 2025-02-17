@@ -291,10 +291,10 @@ TextMesh:
   m_Text: "Deprem \xE7antas\u0131n\u0131n\ni\xE7inde hangi e\u015Fya ve \nmalzemeler
     olmal\u0131?"
   m_OffsetZ: -1.35
-  m_CharacterSize: 1.5
+  m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 4
-  m_Alignment: 1
+  m_Alignment: 0
   m_TabSize: 4
   m_FontSize: 0
   m_FontStyle: 0
@@ -733,7 +733,7 @@ Transform:
   m_GameObject: {fileID: 248710783}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.34, y: 3.1, z: -4.2}
+  m_LocalPosition: {x: -0.5, y: 3.1, z: -4.2}
   m_LocalScale: {x: 0.075, y: 0.075, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1261,6 +1261,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 743654382}
+  - {fileID: 1726979775}
   m_Father: {fileID: 2145418013}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1986,23 +1987,23 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   selectSource: {fileID: 896076748}
-  alice: {fileID: 1612379885}
   trueSelect: {fileID: 8300000, guid: 4bed5b09a3ad6ce4583d6d4d46e7185f, type: 3}
   falseSelect: {fileID: 8300000, guid: aa15507cd42aeda4b8d6dee770e21053, type: 3}
   finish: {fileID: 0}
   earthquakeInfo: "Deprem ve Acil Durum \xC7antas\u0131, deprem gibi beklenmedik
-    durumlarda, acil yard\u0131m ekipleri bize ulasana kadar hayati ihtiya\xE7lar\u0131m\u0131z\u0131
+    durumlarda, acil yard\u0131m ekipleri bize ula\u015Fana kadar hayati ihtiya\xE7lar\u0131m\u0131z\u0131
     ve \xF6nemli evraklar\u0131m\u0131z\u0131 saklayabilecegimiz bir \xE7antad\u0131r.
     Bu \xE7anta, afet sonras\u0131 ilk 72 saatte bizim ve sevdiklerimizin hayat\u0131n\u0131
-    kolaylast\u0131rmak i\xE7in kritik \xF6neme sahiptir."
+    kolayla\u015Ft\u0131rmak i\xE7in kritik \xF6neme sahiptir."
   bagInfo: "\u2003Deprem \xE7antas\u0131 i\xE7inde olmas\u0131 gerekenler: Su, bisk\xFCvi,
-    \xE7ikolata, \xE7abuk \xE7orba, konserve yiyecek, kuru yemis gibi \xE7abuk bozulmayan
-    g\u0131dalar, metal d\xFCd\xFCk (d\xFCd\xFCk hijyen a\xE7\u0131s\u0131ndan posette
-    saklanmal\u0131), fener, yedek pil, stre\xE7 film, elektronik ve diger laz\u0131m
-    olabilecek esyalar (k\u0131yafet, radyo, powerbank), ilk yard\u0131m malzemeleri
-    ve toz maskesi (Yara band\u0131,sarg\u0131 bezi vb.), hijyen malzemeleri, isvi\xE7re
-    \xE7ak\u0131s\u0131, kimlik, pasaport, banka c\xFCzdan fotokopisi, araban\u0131n
-    yedek anahtar\u0131, ila\xE7 kullananlar i\xE7in yedekler"
+    \xE7ikolata, \xE7abuk \xE7orba, konserve yiyecek, kuru yemi\u015F gibi \xE7abuk
+    bozulmayan g\u0131dalar, metal d\xFCd\xFCk (d\xFCd\xFCk hijyen a\xE7\u0131s\u0131ndan
+    po\u015Fette saklanmal\u0131), fener, yedek pil, stre\xE7 film, elektronik ve
+    diger laz\u0131m olabilecek e\u015Fyalar (k\u0131yafet, radyo, powerbank), ilk
+    yard\u0131m malzemeleri ve toz maskesi (Yara band\u0131,sarg\u0131 bezi vb.),
+    hijyen malzemeleri, isvi\xE7re \xE7ak\u0131s\u0131, kimlik, pasaport, banka c\xFCzdan
+    fotokopisi, araban\u0131n yedek anahtar\u0131, ila\xE7 kullananlar i\xE7in yedekler"
+  alice: {fileID: 1612379885}
   bagInside: {fileID: 248710783}
   selections:
   - {fileID: 1581228124}
@@ -2346,7 +2347,6 @@ MonoBehaviour:
   timeFinishBtn: {fileID: 1531490795}
   soundOn: {fileID: 1070277323}
   soundOff: {fileID: 1289387171}
-  apply: {fileID: 1191532877}
   resumeMenu: {fileID: 1315856548}
   gameOverMenu: {fileID: 1564618936}
   musicSlider: {fileID: 991513872}
@@ -2361,6 +2361,7 @@ MonoBehaviour:
   environment2: {fileID: 1050542178}
   earthquakeInfo: {fileID: 1379699054}
   "move\u0131nfo": {fileID: 336859833}
+  apply: {fileID: 1191532877}
   bg: {fileID: 2044122358}
   info: {fileID: 1933438515}
   timeText: {fileID: 1817974718}
@@ -2406,7 +2407,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 562088714}
@@ -2452,7 +2453,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1f912bf6ba95a7941a1361cb8acf0305, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a6b63c8e196f9ea4e854697bdcd296e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3209,7 +3210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2672cd2770e3b7d4699b8f5c3f2c0b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prop: "Do\u011Fru"
+  prop: Dogru
 --- !u!1 &773462980
 GameObject:
   m_ObjectHideFlags: 0
@@ -3237,7 +3238,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 207544968}
@@ -3283,7 +3284,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1f912bf6ba95a7941a1361cb8acf0305, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a6b63c8e196f9ea4e854697bdcd296e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4297,7 +4298,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 789.8, y: 250}
+  m_AnchoredPosition: {x: 789.8, y: 300}
   m_SizeDelta: {x: 70, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1070277323
@@ -4408,8 +4409,8 @@ Transform:
   m_GameObject: {fileID: 1083239487}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
+  m_LocalPosition: {x: 3.7, y: -3.44, z: -0.0011}
+  m_LocalScale: {x: 1.6, y: 1.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1368133883}
@@ -4576,8 +4577,8 @@ Transform:
   m_GameObject: {fileID: 1112943039}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
+  m_LocalPosition: {x: 1.7, y: 0, z: -0.0003}
+  m_LocalScale: {x: 1.6, y: 1.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1581228125}
@@ -4817,7 +4818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2672cd2770e3b7d4699b8f5c3f2c0b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prop: "Do\u011Fru"
+  prop: Dogru
 --- !u!1 &1176869923
 GameObject:
   m_ObjectHideFlags: 0
@@ -4937,7 +4938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2672cd2770e3b7d4699b8f5c3f2c0b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prop: "Do\u011Fru"
+  prop: Dogru
 --- !u!1 &1191532875
 GameObject:
   m_ObjectHideFlags: 0
@@ -5834,7 +5835,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 889.80005, y: 250}
+  m_AnchoredPosition: {x: 889.80005, y: 300}
   m_SizeDelta: {x: 70, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1289387171
@@ -6232,7 +6233,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1903410690}
@@ -6278,7 +6279,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1f912bf6ba95a7941a1361cb8acf0305, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a6b63c8e196f9ea4e854697bdcd296e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6408,7 +6409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2672cd2770e3b7d4699b8f5c3f2c0b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prop: "Do\u011Fru"
+  prop: Dogru
 --- !u!4 &1360342121 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1416942438695910792, guid: b9f9d686c77e9e44c9db465ea5ca6d5b, type: 3}
@@ -6440,7 +6441,7 @@ Transform:
   m_GameObject: {fileID: 1368133882}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.0019, y: -0.0205, z: -0.033}
+  m_LocalPosition: {x: 0.0019, y: -0.0262, z: -0.089}
   m_LocalScale: {x: 0.0003, y: 0.004, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6619,7 +6620,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 500}
-  m_SizeDelta: {x: 1200, y: 400}
+  m_SizeDelta: {x: 1500, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1379699056
 MonoBehaviour:
@@ -6641,7 +6642,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f0da7f817b1bc7a42a67c3b1fff24121, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1cbf33a74e67d4a44ba05decde36b7fd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7453,7 +7454,7 @@ Transform:
   m_GameObject: {fileID: 1581228124}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.058, y: -0.0342, z: 0.0074}
+  m_LocalPosition: {x: -0.0738, y: -0.0342, z: -0.0098}
   m_LocalScale: {x: 0.001, y: 0.001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8146,6 +8147,140 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1726979774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1726979775}
+  - component: {fileID: 1726979777}
+  - component: {fileID: 1726979776}
+  m_Layer: 5
+  m_Name: PosInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1726979775
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726979774}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 336859834}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 600, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1726979776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726979774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "     \xC7\xF6k                Kapan           Tutun"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: a248596934b08404eab5b86137420959, type: 2}
+  m_sharedMaterial: {fileID: 558297454825025573, guid: a248596934b08404eab5b86137420959, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190335
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1726979777
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726979774}
+  m_CullTransparentMesh: 1
 --- !u!1 &1729747105
 GameObject:
   m_ObjectHideFlags: 0
@@ -8538,7 +8673,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 400}
+  m_SizeDelta: {x: 1400, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1828585622
 MonoBehaviour:
@@ -8562,8 +8697,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a248596934b08404eab5b86137420959, type: 2}
+  m_sharedMaterial: {fileID: 558297454825025573, guid: a248596934b08404eab5b86137420959, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9527,23 +9662,23 @@ MonoBehaviour:
   turn: {fileID: 0}
   player: {fileID: 0}
   infos:
-  - "Merhaba! Hos geldin! Birlikte eglenmeye ve \xF6grenmeye haz\u0131r m\u0131s\u0131n? 
+  - "Merhaba! Ho\u015F geldin! Birlikte eglenmeye ve \xF6grenmeye haz\u0131r m\u0131s\u0131n? 
     Benim ad\u0131m Alice! Nas\u0131l yapar\u0131m bunu? Aray\u0131p bulmal\u0131y\u0131m,
-    \xE7\u0131k\u0131s yolunu! \u0130nand\u0131m kendime ve denedim. S\xFCrekli \xE7abalad\u0131m!
-    Sonunda, buldum \xE7\u0131k\u0131s yolunu! \xC7\xFCnk\xFC benim ad\u0131m Alice! 
-    Hadi! Baslayal\u0131m."
-  - "Deprem \xE7antan\u0131 yan\u0131nda ald\u0131\u011F\u0131ndan emin misin?"
-  - "Tebrikler! Ba\u015Fard\u0131k! Deprem \xE7antam\u0131z\u0131n hangisi oldu\u011Funu
-    ve \xF6nemini \xF6\u011Frendik!"
+    \xE7\u0131k\u0131\u015F yolunu! \u0130nand\u0131m kendime ve denedim. S\xFCrekli
+    \xE7abalad\u0131m! Sonunda, buldum \xE7\u0131k\u0131\u015F yolunu! \xC7\xFCnk\xFC
+    benim ad\u0131m Alice!  Hadi! Ba\u015Flayal\u0131m."
+  - "Deprem \xE7antan\u0131 yan\u0131nda ald\u0131g\u0131ndan emin misin?"
+  - "Tebrikler! Ba\u015Fard\u0131k! Deprem \xE7antam\u0131z\u0131n hangisi oldugunu
+    ve \xF6nemini \xF6grendik!"
   - "Deprem oluyor! G\xFCvenli bir alana ge\xE7! Deprem oldugunda hemen yere \xE7\xF6k,
-    bas\u0131n\u0131 ve boynunu koruyacak sekilde kapan, ve g\xFCvenli bir yere s\u0131k\u0131ca
-    tutun! Senin i\xE7in yukar\u0131da \xE7\xF6k-kapan-tutun hareketini nas\u0131l
-    yapabilecegini g\xF6sterdim! Hadi!"
+    ba\u015F\u0131n\u0131 ve boynunu koruyacak \u015Fekilde kapan, ve g\xFCvenli
+    bir yere s\u0131k\u0131ca tutun! Senin i\xE7in yukar\u0131da \xE7\xF6k-kapan-tutun
+    hareketini nas\u0131l yapabilecegini g\xF6sterdim! Hadi!"
   - "Depremi hasars\u0131z atlatt\u0131k. Depreme haz\u0131rl\u0131kl\u0131 olmak
     \xE7ok \xF6nemli! Deprem \xE7antas\u0131n\u0131n i\xE7inde olmas\u0131 gereken
-    baz\u0131 \xF6nemli esya ve malzemeleri birlikte se\xE7elim. Dogru malzemeleri
+    baz\u0131 \xF6nemli e\u015Fya ve malzemeleri birlikte se\xE7elim. Dogru malzemeleri
     se\xE7tigimizden emin olmal\u0131y\u0131z. Haz\u0131r m\u0131s\u0131n?"
-  - "Basard\u0131k, tebrikler! Depreme kars\u0131 art\u0131k daha da haz\u0131rl\u0131kl\u0131y\u0131z!
+  - "Ba\u015Fard\u0131k, tebrikler! Depreme kar\u015F\u0131 art\u0131k daha da haz\u0131rl\u0131kl\u0131y\u0131z!
     Hadi, gel! Okula gitme zaman\u0131!"
   injuredBird: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   level1Manager: {fileID: 485272175}
@@ -9921,7 +10056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2672cd2770e3b7d4699b8f5c3f2c0b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prop: "Do\u011Fru"
+  prop: Dogru
 --- !u!1 &2040585505
 GameObject:
   m_ObjectHideFlags: 0
@@ -10991,6 +11126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3612625890769319108, guid: b9f9d686c77e9e44c9db465ea5ca6d5b, type: 3}
+    - {fileID: 3295699686491030401, guid: b9f9d686c77e9e44c9db465ea5ca6d5b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3774182510174081126, guid: b9f9d686c77e9e44c9db465ea5ca6d5b, type: 3}
@@ -11024,6 +11160,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5818344686855212698, guid: b9f9d686c77e9e44c9db465ea5ca6d5b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4774331402545660718}
+    - targetCorrespondingSourceObject: {fileID: 2439019436113559991, guid: b9f9d686c77e9e44c9db465ea5ca6d5b, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 4774331402545660715}
   m_SourcePrefab: {fileID: 100100000, guid: b9f9d686c77e9e44c9db465ea5ca6d5b, type: 3}
 --- !u!1 &4774331402545660711 stripped
 GameObject:
@@ -11040,6 +11179,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3774182510174081126, guid: b9f9d686c77e9e44c9db465ea5ca6d5b, type: 3}
   m_PrefabInstance: {fileID: 4774331402545660710}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4774331402545660714 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2439019436113559991, guid: b9f9d686c77e9e44c9db465ea5ca6d5b, type: 3}
+  m_PrefabInstance: {fileID: 4774331402545660710}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &4774331402545660715
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4774331402545660714}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0078043747, y: 0.018166771, z: 0.16458663}
+  m_Center: {x: -0.00039543194, y: -0.020838208, z: -0.056790806}
 --- !u!65 &4774331402545660718
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11059,8 +11224,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0056336764, y: 0.05811343, z: 0.025090173}
-  m_Center: {x: -0.058668192, y: -0.000023020204, z: -0.0039171493}
+  m_Size: {x: 0.018189613, y: 0.05811343, z: 0.025090173}
+  m_Center: {x: -0.073316924, y: -0.00002302231, z: -0.0039171493}
 --- !u!108 &5887771546667932902
 Light:
   m_ObjectHideFlags: 0

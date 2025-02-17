@@ -7,8 +7,8 @@ using DG.Tweening;
 
 public class MenuUIManager : MonoBehaviour
 {
-    [SerializeField] CanvasGroup main, settings, credits, writers;
-    [SerializeField] Button backBtn, playBtn, settingsBtn, creditsBtn, writersBtn, soundOn, soundOff;
+    [SerializeField] CanvasGroup main, settings, credits, writers, select;
+    [SerializeField] Button backBtn, playBtn, settingsBtn, creditsBtn, selectBtn, writersBtn, soundOn, soundOff, level1, level2, level3;
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, effect;
     [SerializeField] Image cursor;
@@ -38,8 +38,12 @@ public class MenuUIManager : MonoBehaviour
         settingsBtn.onClick.AddListener(delegate { GroupChange(settings); });
         creditsBtn.onClick.AddListener(delegate { GroupChange(credits); });
         writersBtn.onClick.AddListener(delegate { GroupChange(writers); });
+        selectBtn.onClick.AddListener(delegate { GroupChange(select); });
         soundOn.onClick.AddListener(delegate { SoundOnOff(true); });
         soundOff.onClick.AddListener(delegate { SoundOnOff(false); });
+        level1.onClick.AddListener(delegate { LevelSelect(1); });
+        level2.onClick.AddListener(delegate { LevelSelect(2); });
+        level3.onClick.AddListener(delegate { LevelSelect(3); });
 
         Cursor.visible = false;
 
@@ -96,6 +100,10 @@ public class MenuUIManager : MonoBehaviour
             effect.volume = 0;
             PlayerPrefs.SetFloat("OnOff", 0);
         }
+    }
+    void LevelSelect(int sceneCount)
+    {
+        SceneManager.LoadScene(sceneCount);
     }
     //void SoundChanged(Slider slider, AudioSource source, string key)
     //{

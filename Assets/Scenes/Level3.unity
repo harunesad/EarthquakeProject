@@ -448,17 +448,17 @@ MonoBehaviour:
   turn: {fileID: 1438872571}
   player: {fileID: 363584698}
   infos:
-  - "Basard\u0131k, tebrikler! Hadi gel, biraz sokakta y\xFCr\xFCyelim!"
+  - "Ba\u015Fard\u0131k, tebrikler! Hadi gel, biraz sokakta y\xFCr\xFCyelim!"
   - "Deprem oluyor! Sokakta yakaland\u0131k ama panik yapmamal\u0131y\u0131z! Sakin
     ve dikkatli olmal\u0131y\u0131z. Direkler ve aga\xE7lar devriliyor! G\xFCvenli
-    b\xF6lgeye ulasmam\u0131z gerekiyor. Bunu yapman\u0131n tek yolu, aga\xE7 ve
-    direklerin olmad\u0131g\u0131 y\xF6ne dogru ilerlemek! Gitmek istedigin y\xF6n\xFC
+    b\xF6lgeye ula\u015Fmam\u0131z gerekiyor. Bunu yapman\u0131n tek yolu, aga\xE7
+    ve direklerin olmad\u0131g\u0131 y\xF6ne dogru ilerlemek! Gitmek istedigin y\xF6n\xFC
     mouse yard\u0131m\u0131yla, \xFCzerine t\u0131klayarak se\xE7ebilirsin! Zaman
     daral\u0131yor, hadi gidelim!"
-  - "Harikas\u0131n! G\xFCvenli b\xF6lgeye ulasmay\u0131 basard\u0131k. Deprem s\u0131ras\u0131nda
-    sakin kal\u0131p, dogru kararlar alarak g\xFCvenli bir yere ulast\u0131k! Seni
-    tan\u0131mak g\xFCzeldi. Art\u0131k evime d\xF6nmem gerekiyor! Yeni maceralarda
-    g\xF6r\xFCsmek \xFCzere!  Hos\xE7akal!"
+  - "Harikas\u0131n! G\xFCvenli b\xF6lgeye ula\u015Fmay\u0131 ba\u015Fard\u0131k.
+    Deprem s\u0131ras\u0131nda sakin kal\u0131p, dogru kararlar alarak g\xFCvenli
+    bir yere ula\u015Ft\u0131k! Seni tan\u0131mak g\xFCzeldi. Art\u0131k evime d\xF6nmem
+    gerekiyor! Yeni maceralarda g\xF6r\xFC\u015Fmek \xFCzere!  Ho\u015F\xE7akal!"
   - dsadsa
   - saads
   injuredBird: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
@@ -1483,7 +1483,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 850, y: 250}
+  m_AnchoredPosition: {x: 850, y: 300}
   m_SizeDelta: {x: 70, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &313902785
@@ -2109,7 +2109,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445985822}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4386,7 +4386,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: dd27ed429eb13d7438db0ec3f6d8b9b2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5021,6 +5021,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5116,6 +5117,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 363584704}
   offset: {x: -4.5, y: 2.75, z: 0}
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab8353b5ebd32545867da143199a814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultPosInfluence: {x: 0.15, y: 0.15, z: 0.15}
+  DefaultRotInfluence: {x: 1, y: 1, z: 1}
+  RestPositionOffset: {x: 0, y: 3, z: -10}
+  RestRotationOffset: {x: 10, y: 0, z: 0}
 --- !u!1 &999577203
 GameObject:
   m_ObjectHideFlags: 0
@@ -5784,7 +5801,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 750, y: 250}
+  m_AnchoredPosition: {x: 750, y: 300}
   m_SizeDelta: {x: 70, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1208652259
@@ -6935,7 +6952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6981132, g: 0.68823427, b: 0.68823427, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

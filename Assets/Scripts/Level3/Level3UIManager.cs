@@ -1,4 +1,5 @@
 using DG.Tweening;
+using EZCameraShake;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ public class Level3UIManager : MonoBehaviour
     [SerializeField] AudioSource music, effect;
     [SerializeField] Level3Manager level3Manager;
     [SerializeField] Vector3 camRot;
-    [SerializeField] Image cursor;
+    public Image cursor;
     public CanvasGroup bg;
     public Button apply;
     public Info info;
@@ -58,6 +59,11 @@ public class Level3UIManager : MonoBehaviour
 
         //musicSlider.onValueChanged.AddListener(delegate { SoundChanged(musicSlider, music, "Music"); });
         //effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
+        Invoke("ApplyActive", 5);
+    }
+    void ApplyActive()
+    {
+        apply.gameObject.SetActive(true);
     }
     void Update()
     {
@@ -114,6 +120,7 @@ public class Level3UIManager : MonoBehaviour
         effect.Play();
         info.info.SetActive(false);
         info.alice.Stop();
+        //apply.gameObject.SetActive(false);
         StopAllCoroutines();
         if (info.infoId == 1)
         {
@@ -129,6 +136,8 @@ public class Level3UIManager : MonoBehaviour
             info.info.SetActive(false);
             bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
             {
+                Camera.main.GetComponent<CameraShaker>().enabled = true;
+                CameraShaker.Instance.StartShake(.5f, 4, .1f);
                 bg.GetComponent<Image>().color = new Color(1, 1, 1, 1);
                 level3Manager.enabled = true;
                 timer = true;
@@ -142,10 +151,14 @@ public class Level3UIManager : MonoBehaviour
     IEnumerator NextInfo()
     {
         yield return new WaitForSeconds(info.alice.clip.length);
+        apply.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
         info.info.SetActive(false);
         earthquakeInfo.SetActive(false);
         bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
+            Camera.main.GetComponent<CameraShaker>().enabled = true;
+            CameraShaker.Instance.StartShake(.5f, 4, .1f);
             bg.GetComponent<Image>().color = new Color(1, 1, 1, 1);
             level3Manager.enabled = true;
             timer = true;

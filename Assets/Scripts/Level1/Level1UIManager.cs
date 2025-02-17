@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class Level1UIManager : MonoBehaviour
 {
     [SerializeField] Button resumeMenuBtn, resumeBtn, resumeCloseBtn, resumeRestartBtn, gameoverRestartBtn, resumeExitBtn, gameoverExitBtn,
-        timeFinishBtn, soundOn, soundOff, apply;
+        timeFinishBtn, soundOn, soundOff;
     [SerializeField] GameObject resumeMenu, gameOverMenu;
     [SerializeField] Slider musicSlider, effectSlider;
     [SerializeField] AudioSource music, effect, select;
@@ -17,6 +17,7 @@ public class Level1UIManager : MonoBehaviour
     [SerializeField] Vector3 camRot;
     [SerializeField] Image cursor;
     public GameObject environment1, environment2, earthquakeInfo, moveýnfo;
+    public Button apply;
     public CanvasGroup bg;
     public Info info;
     public TextMeshProUGUI timeText;
@@ -60,6 +61,11 @@ public class Level1UIManager : MonoBehaviour
         //effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
 
         //TimerStart();
+        Invoke("ApplyActive", 15);
+    }
+    void ApplyActive()
+    {
+        apply.gameObject.SetActive(true);
     }
     private void Update()
     {
@@ -136,6 +142,13 @@ public class Level1UIManager : MonoBehaviour
         info.alice.Stop();
         level1Manager.stop = true;
         StopAllCoroutines();
+        if (info.infoId == 5)
+        {
+            for (int i = 0; i < level1Manager.selections.Count; i++)
+            {
+                level1Manager.selections[i].SetActive(false);
+            }
+        }
         bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
             earthquakeInfo.SetActive(false);
@@ -167,10 +180,6 @@ public class Level1UIManager : MonoBehaviour
             }
             else if (info.infoId == 5)
             {
-                for (int i = 0; i < level1Manager.selections.Count; i++)
-                {
-                    level1Manager.selections[i].SetActive(false);
-                }
                 info.info.SetActive(false);
                 level1Manager.bagInside.gameObject.SetActive(true);
                 bg.gameObject.SetActive(false);
@@ -185,12 +194,16 @@ public class Level1UIManager : MonoBehaviour
     public IEnumerator BagMissing()
     {
         yield return new WaitForSeconds(2);
+        //apply.gameObject.SetActive(false);
         bg.GetComponent<Image>().color = new Color(0, 0, 0, .5f);
         bg.DOFade(1, 1).OnComplete(() =>
         {
             info.InfoShowing();
         });
-        yield return new WaitForSeconds(16);
+        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(level1Manager.alice.clip.length);
+        apply.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
         info.info.SetActive(false);
         bg.DOFade(0, 1).OnComplete(() =>
         {
