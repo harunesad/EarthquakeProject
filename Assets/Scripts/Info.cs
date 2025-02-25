@@ -210,51 +210,63 @@ public class Info : MonoBehaviour
     {
         turn.SetActive(false);
         Time.timeScale = 1;
-        Vector3 playerRot = Camera.main.transform.localEulerAngles;
+        Vector3 playerRot = player.transform.localEulerAngles;
         player.transform.DOLocalRotate(new Vector3(playerRot.x, playerRot.y + 90, playerRot.z), .5f).SetEase(Ease.Linear);
         Vector3 camRot = Camera.main.transform.localEulerAngles;
         Camera.main.transform.DOLocalRotate(new Vector3(camRot.x, camRot.y + 90, camRot.z), .5f).SetEase(Ease.Linear);
+        FindAnyObjectByType<Level3Manager>().target.gameObject.layer = 0;
+        FindAnyObjectByType<Level3Manager>().target = turnProp.options[0];
+        FindAnyObjectByType<Level3Manager>().newTarget = turnProp.options[0].position;
+        turnProp.options[0].gameObject.layer = 11;
 
-        if (turnProp.correctPath[0] == false)
-        {
-            InfoChange("Burada güvenli deðilsin! Hemen baþka bir yola git!");
-        }
-        else
-        {
-            InfoChange("Burada güvenlisin! Bu yoldan devam et!");
-        }
+        //if (turnProp.correctPath[0] == false)
+        //{
+        //    InfoChange("Burada güvenli deðilsin! Hemen baþka bir yola git!");
+        //}
+        //else
+        //{
+        //    InfoChange("Burada güvenlisin! Bu yoldan devam et!");
+        //}
     }
     void TurnLeft()
     {
         turn.SetActive(false);
         Time.timeScale = 1;
-        Vector3 playerRot = Camera.main.transform.localEulerAngles;
+        Vector3 playerRot = player.transform.localEulerAngles;
         player.transform.DOLocalRotate(new Vector3(playerRot.x, playerRot.y - 90, playerRot.z), .5f).SetEase(Ease.Linear);
         Vector3 camRot = Camera.main.transform.localEulerAngles;
         Camera.main.transform.DOLocalRotate(new Vector3(camRot.x, camRot.y - 90, camRot.z), .5f).SetEase(Ease.Linear);
+        FindAnyObjectByType<Level3Manager>().target.gameObject.layer = 0;
+        FindAnyObjectByType<Level3Manager>().target = turnProp.options[1];
+        FindAnyObjectByType<Level3Manager>().newTarget = turnProp.options[1].position;
+        turnProp.options[1].gameObject.layer = 11;
 
-        if (turnProp.correctPath[1] == false)
-        {
-            InfoChange("Burada güvenli deðilsin! Hemen baþka bir yola git!");
-        }
-        else
-        {
-            InfoChange("Burada güvenlisin! Bu yoldan devam et!");
-        }
+        //if (turnProp.correctPath[1] == false)
+        //{
+        //    InfoChange("Burada güvenli deðilsin! Hemen baþka bir yola git!");
+        //}
+        //else
+        //{
+        //    InfoChange("Burada güvenlisin! Bu yoldan devam et!");
+        //}
     }
     void ContinueCenter()
     {
         turn.SetActive(false);
         Time.timeScale = 1;
+        FindAnyObjectByType<Level3Manager>().target.gameObject.layer = 0;
+        FindAnyObjectByType<Level3Manager>().target = turnProp.options[2];
+        FindAnyObjectByType<Level3Manager>().newTarget = turnProp.options[2].position;
+        turnProp.options[2].gameObject.layer = 11;
 
-        if (turnProp.correctPath[2] == false)
-        {
-            InfoChange("Burada güvenli deðilsin! Hemen baþka bir yola git!");
-        }
-        else
-        {
-            InfoChange("Burada güvenlisin! Bu yoldan devam et!");
-        }
+        //if (turnProp.correctPath[2] == false)
+        //{
+        //    InfoChange("Burada güvenli deðilsin! Hemen baþka bir yola git!");
+        //}
+        //else
+        //{
+        //    InfoChange("Burada güvenlisin! Bu yoldan devam et!");
+        //}
     }
 }
 [System.Serializable]

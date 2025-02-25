@@ -85,8 +85,18 @@ public class Crash : MonoBehaviour
         }
         else if (other.gameObject.layer == 16)
         {
-            Vector3 obstacleRot = other.transform.parent.localEulerAngles;
-            other.transform.parent.DOLocalRotate(new Vector3(obstacleRot.x, obstacleRot.y, 90), .5f).SetEase(Ease.Linear);
+            //if (other.transform.parent.name.Contains("tree"))
+            //{
+            //    Debug.Log(other.transform.parent.eulerAngles);
+            //    //Vector3 obstacleRot = other.transform.parent.localEulerAngles;
+            //    //other.transform.parent.DOLocalRotate(new Vector3(-10, obstacleRot.y, obstacleRot.z), .5f).SetEase(Ease.Linear);
+            //    other.transform.parent.DOLocalRotate(other.transform.parent.GetComponent<RotUpdate>().rot, .5f).SetEase(Ease.Linear);
+            //}
+            if (other.transform.parent.name.Contains("lamb"))
+            {
+                Debug.Log("c");
+                other.transform.parent.GetComponent<Rigidbody>().useGravity = true;
+            }
         }
     }
     IEnumerator ApplyOpen()

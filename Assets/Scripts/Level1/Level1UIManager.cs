@@ -149,6 +149,10 @@ public class Level1UIManager : MonoBehaviour
                 level1Manager.selections[i].SetActive(false);
             }
         }
+        else if (info.infoId == 6)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
         bg.DOFade(0, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
             earthquakeInfo.SetActive(false);
@@ -184,10 +188,10 @@ public class Level1UIManager : MonoBehaviour
                 level1Manager.bagInside.gameObject.SetActive(true);
                 bg.gameObject.SetActive(false);
             }
-            else if (info.infoId == 6)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            }
+            //else if (info.infoId == 6)
+            //{
+            //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            //}
             //TimerStart();
         });
     }

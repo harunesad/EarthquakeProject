@@ -21,7 +21,7 @@ public class Level2UIManager : MonoBehaviour
     [SerializeField] List<Answers> answers;
     public Button apply;
     public AudioSource effect;
-    public GameObject moveInfo;
+    public GameObject moveInfo, earthquakeLast;
     public CanvasGroup bg;
     public Level2Manager level2Manager;
     public Info info;
@@ -69,10 +69,11 @@ public class Level2UIManager : MonoBehaviour
         //effectSlider.onValueChanged.AddListener(delegate { SoundChanged(effectSlider, effect, "Effect"); });
 
         //TimerStart();
-        Invoke("ApplyActive", 11);
+        StartCoroutine(ApplyActive());
     }
-    void ApplyActive()
+    IEnumerator ApplyActive()
     {
+        yield return new WaitForSeconds(11);
         apply.gameObject.SetActive(true);
     }
     void Update()
@@ -152,6 +153,7 @@ public class Level2UIManager : MonoBehaviour
             }
             bg.GetComponent<Image>().DOColor(new Color(0, 0, 0, .5f), 1).SetEase(Ease.Linear).OnComplete(() =>
             {
+                earthquakeLast.SetActive(true);
                 info.info.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 200, 0);
                 info.info.GetComponentInChildren<TextMeshProUGUI>().text = answers[answerId].question;
                 a.GetComponentInChildren<TextMeshProUGUI>().text = answers[answerId].answers[0];
@@ -277,31 +279,31 @@ public class Level2UIManager : MonoBehaviour
             //{
             //    CompetitionOpen();
             //});
-            if (answerId == 5)
-            {
-                bg.GetComponent<Image>().DOColor(new Color(1, 1, 1, 1), 1).SetEase(Ease.Linear).OnComplete(() =>
-                {
-                    info.InfoShowing();
-                    apply.gameObject.SetActive(true);
-                    //StartCoroutine(ApplyOpen());
-                    info.info.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -250, 0);
-                    a.gameObject.SetActive(false);
-                    b.gameObject.SetActive(false);
-                    //apply.gameObject.SetActive(true);
-                });
-                //CompetitionOpen();
-            }
         }
         else
         {
             select.clip = falseSelect;
             select.Play();
+            answerId++;
             //bg.alpha = 0;
             //info.infoId = 2;
             //info.info.SetActive(false);
             //NextLevel();
             //GameoverOpen();
-            return;
+        }
+        if (answerId == 5)
+        {
+            bg.GetComponent<Image>().DOColor(new Color(1, 1, 1, 1), 1).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                info.InfoShowing();
+                apply.gameObject.SetActive(true);
+                //StartCoroutine(ApplyOpen());
+                info.info.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -250, 0);
+                a.gameObject.SetActive(false);
+                b.gameObject.SetActive(false);
+                //apply.gameObject.SetActive(true);
+            });
+            //CompetitionOpen();
         }
         click = true;
         StartCoroutine(NextQuestion());

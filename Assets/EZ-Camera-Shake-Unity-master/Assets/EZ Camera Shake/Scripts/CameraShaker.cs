@@ -64,7 +64,8 @@ namespace EZCameraShake
             }
             //Harun: The description below was not.
             //transform.localPosition = posAddShake + RestPositionOffset;
-            transform.localEulerAngles = rotAddShake + RestRotationOffset;
+            //Harun: The code of below was changed.
+            transform.localEulerAngles = new Vector3(rotAddShake.x + RestRotationOffset.x, transform.localEulerAngles.y, rotAddShake.z + RestRotationOffset.z);
         }
 
         /// <summary>

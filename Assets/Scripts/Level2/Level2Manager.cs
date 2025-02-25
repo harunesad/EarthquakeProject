@@ -41,8 +41,8 @@ public class Level2Manager : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, 100, hideLayer))
             {
-                level2UIManager.moveInfo.GetComponentInChildren<TextMeshProUGUI>().text = lifeInfo;
-                level2UIManager.moveInfo.SetActive(true);
+                //level2UIManager.moveInfo.GetComponentInChildren<TextMeshProUGUI>().text = lifeInfo;
+                //level2UIManager.moveInfo.SetActive(true);
                 hit.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                 if (selectSource.isPlaying)
                 {
@@ -184,7 +184,7 @@ public class Level2Manager : MonoBehaviour
         level2UIManager.bg.GetComponent<Image>().color = new Color(0, 0, 0, .5f);
         level2UIManager.bg.DOFade(1, 1).OnComplete(() =>
         {
-            level2UIManager.moveInfo.GetComponentInChildren<TextMeshProUGUI>().text = earthquakeInfo;
+            //level2UIManager.moveInfo.GetComponentInChildren<TextMeshProUGUI>().text = earthquakeInfo;
             level2UIManager.moveInfo.SetActive(true);
             level2UIManager.info.InfoShowing();
         });
