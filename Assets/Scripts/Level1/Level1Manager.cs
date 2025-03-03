@@ -51,12 +51,12 @@ public class Level1Manager : MonoBehaviour
                 }
                 level1UIManager.moveýnfo.SetActive(false);
                 level1UIManager.earthquakeInfo.SetActive(false);
-                hit.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                 //player.position = hit.transform.GetComponent<HideProp>().pos;
                 //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.GetComponent<HideProp>().pos);
                 if (hit.transform.name == "table" || hit.transform.name == "carpet" || hit.transform.name == "door")
                 {
+                    hit.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                     if (selectSource.isPlaying)
                     {
                         selectSource.Stop();
@@ -73,6 +73,11 @@ public class Level1Manager : MonoBehaviour
                 else
                 {
                     move = true;
+                    for (int i = 0; i < selections.Count; i++)
+                    {
+                        selections[i].SetActive(false);
+                    }
+                    StartCoroutine(MoveHideAgent());
                     if (selectSource.isPlaying)
                     {
                         selectSource.Stop();
@@ -85,14 +90,14 @@ public class Level1Manager : MonoBehaviour
                         selectSource.Play();
                     }
                     //level1UIManager.apply.gameObject.SetActive(false);
-                    level1UIManager.bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
-                    {
-                        level1UIManager.earthquakeInfo.GetComponentInChildren<TextMeshProUGUI>().text = bagInfo;
-                        level1UIManager.earthquakeInfo.SetActive(true);
-                        Camera.main.transform.localEulerAngles = new Vector3(0, 0, 0);
-                        level1UIManager.info.InfoShowing();
-                        StartCoroutine(BagInside());
-                    });
+                    //level1UIManager.bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
+                    //{
+                    //    level1UIManager.earthquakeInfo.GetComponentInChildren<TextMeshProUGUI>().text = bagInfo;
+                    //    level1UIManager.earthquakeInfo.SetActive(true);
+                    //    Camera.main.transform.localEulerAngles = new Vector3(0, 0, 0);
+                    //    level1UIManager.info.InfoShowing();
+                    //    StartCoroutine(BagInside());
+                    //});
                 }
             }
             else if (Physics.Raycast(ray, out hit, 100, bagLayer) && !level1UIManager.info.info.activeSelf && !move)
@@ -111,8 +116,8 @@ public class Level1Manager : MonoBehaviour
                     selectSource.clip = trueSelect;
                     selectSource.Play();
                 }
-                player.position = hit.transform.GetComponent<HideProp>().pos;
-                StartCoroutine(BagMissing(hit));
+                //player.position = hit.transform.GetComponent<HideProp>().pos;
+                StartCoroutine(MoveBagAgent());
                 //player.gameObject.SetActive(true);
                 //player.SetDestination(hit.transform.position);
                 //move = true;
@@ -197,6 +202,50 @@ public class Level1Manager : MonoBehaviour
                 StartCoroutine(SceneLoad());
             });
         }
+    }
+    IEnumerator MoveBagAgent()
+    {
+        player.GetComponent<Animator>().SetBool("Walk", true);
+        //player.LookAt(hit.transform.position);
+        player.DOLookAt(hit.transform.GetComponent<HideProp>().pos, .5f).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            player.GetComponent<NavMeshAgent>().SetDestination(hit.transform.GetComponent<HideProp>().pos);
+        });
+        //var targetRotation = Quaternion.LookRotation(hit.transform.position - player.transform.position);
+
+        //player.transform.rotation = Quaternion.Slerp(player.transform.rotation, targetRotation, 5 * Time.deltaTime);
+        //player.GetComponent<NavMeshAgent>().SetDestination(hit.transform.position);
+        yield return new WaitForSeconds(1.5f);
+        yield return new WaitUntil(() => !player.GetComponent<NavMeshAgent>().hasPath);
+        StartCoroutine(BagMissing(hit));
+        player.GetComponent<Animator>().SetBool("Walk", false);
+        player.GetComponent<NavMeshAgent>().isStopped = true;
+    }
+    IEnumerator MoveHideAgent()
+    {
+        player.GetComponent<NavMeshAgent>().isStopped = false;
+        player.GetComponent<Animator>().SetBool("Walk", true);
+        //player.LookAt(hit.transform.position);
+        player.DOLookAt(hit.transform.GetComponent<HideProp>().pos, .5f).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            player.GetComponent<NavMeshAgent>().SetDestination(hit.transform.GetComponent<HideProp>().pos);
+        });
+        //player.GetComponent<NavMeshAgent>().SetDestination(hit.transform.position);
+        yield return new WaitForSeconds(1.5f);
+        yield return new WaitUntil(() => !player.GetComponent<NavMeshAgent>().hasPath);
+        player.GetComponent<Animator>().SetBool("Walk", false);
+        player.GetComponent<NavMeshAgent>().isStopped = true;
+        player.GetComponent<Animator>().SetTrigger("Hide");
+        yield return new WaitForSeconds(1.5f);
+        level1UIManager.bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            level1UIManager.earthquakeInfo.GetComponentInChildren<TextMeshProUGUI>().text = bagInfo;
+            level1UIManager.earthquakeInfo.SetActive(true);
+            Camera.main.transform.localEulerAngles = new Vector3(0, 0, 0);
+            level1UIManager.info.InfoShowing();
+            StartCoroutine(BagInside());
+            player.gameObject.SetActive(false);
+        });
     }
     public IEnumerator BagMissing(RaycastHit hit)
     {

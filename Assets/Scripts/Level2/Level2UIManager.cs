@@ -334,6 +334,7 @@ public class Level2UIManager : MonoBehaviour
         //apply.gameObject.SetActive(false);
         bg.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
+            level2Manager.player.gameObject.SetActive(false);
             //timeFinishBtn.gameObject.SetActive(false);
             info.InfoShowing();
             //StartCoroutine(ApplyOpen());

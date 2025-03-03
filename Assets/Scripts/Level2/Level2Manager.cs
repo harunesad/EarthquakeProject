@@ -43,7 +43,11 @@ public class Level2Manager : MonoBehaviour
             {
                 //level2UIManager.moveInfo.GetComponentInChildren<TextMeshProUGUI>().text = lifeInfo;
                 //level2UIManager.moveInfo.SetActive(true);
-                hit.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+                for (int i = 0; i < selections.Count; i++)
+                {
+                    selections[i].SetActive(false);
+                }
+                //hit.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                 if (selectSource.isPlaying)
                 {
                     selectSource.Stop();
@@ -70,7 +74,7 @@ public class Level2Manager : MonoBehaviour
                 //    alice.clip = safe;
                 //    alice.Play();
                 //}
-                level2UIManager.NextLevel();
+                StartCoroutine(MoveHideAgent());
                 //level2UIManager.info.InfoChange("Alice, yaþam üçgenini doðru uyguladýn!");
             }
             else if (Physics.Raycast(ray, out hit, 100, trapLayer))
@@ -160,6 +164,24 @@ public class Level2Manager : MonoBehaviour
         {
             level2UIManager.GameoverOpen();
         }
+    }
+    IEnumerator MoveHideAgent()
+    {
+        player.GetComponent<Animator>().SetBool("Walk", true);
+        //player.LookAt(hit.transform.position);
+        Debug.Log(hit.transform.GetComponent<HideProp>().pos);
+        player.DOLookAt(hit.transform.GetComponent<HideProp>().pos, .5f).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            player.GetComponent<NavMeshAgent>().SetDestination(hit.transform.GetComponent<HideProp>().pos);
+        });
+        //player.GetComponent<NavMeshAgent>().SetDestination(hit.transform.position);
+        yield return new WaitForSeconds(1.5f);
+        yield return new WaitUntil(() => !player.GetComponent<NavMeshAgent>().hasPath);
+        player.GetComponent<Animator>().SetBool("Walk", false);
+        player.GetComponent<NavMeshAgent>().isStopped = true;
+        player.GetComponent<Animator>().SetTrigger("Hide");
+        yield return new WaitForSeconds(1.5f);
+        level2UIManager.NextLevel();
     }
     public IEnumerator Dropping()
     {
